@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem; // Novo sistema
 
-public class PlayerMovement2D_NewInput : MonoBehaviour
+public class TesteAndando : MonoBehaviour
 {
     public float moveSpeed = 5f;
     private Rigidbody2D rb;
