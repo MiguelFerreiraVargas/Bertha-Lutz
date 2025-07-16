@@ -4,28 +4,14 @@ using UnityEngine.InputSystem; // Novo sistema
 public class TesteAndando : MonoBehaviour
 {
     public float moveSpeed = 5f;
-    private Rigidbody2D rb;
-    private Vector2 movement;
-
-    void Start()
-    {
-        rb = GetComponent<Rigidbody2D>();
-    }
 
     void Update()
     {
-        var keyboard = Keyboard.current;
+        float x = Input.GetAxis("Horizontal");
+        float y = Input.GetAxis("Vertical");
 
-        movement = Vector2.zero;
+        Vector3 direction = new Vector3(x, y, 0);
 
-        if (keyboard.leftArrowKey.isPressed || keyboard.aKey.isPressed)
-            movement.x = -1;
-        if (keyboard.rightArrowKey.isPressed || keyboard.dKey.isPressed)
-            movement.x = 1;
-    }
-
-    void FixedUpdate()
-    {
-        rb.linearVelocity = movement * moveSpeed;
+        transform.position += direction * moveSpeed * Time.deltaTime;
     }
 }
