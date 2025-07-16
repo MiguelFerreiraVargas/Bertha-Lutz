@@ -4,7 +4,7 @@ using UnityEngine.UI;
 public class BarraDeVida : MonoBehaviour
 {
     public Slider slider; 
-    public float health = 100f;
+    public float health = 100f;// float pois o jogador não se movimenta no eixo x 0.1 unidades no trecho de um frame
     public float healthMax = 100f; 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
