@@ -23,7 +23,7 @@ public class PlayerController : MonoBehaviour
         // Entrada WASD
         movement = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
 
-        // Trocar sprite de acordo com direção
+        // Trocar sprite de acordo com direï¿½ï¿½o
         if (Input.GetKey(KeyCode.W))
         {
             spriteRenderer.sprite = upSprite;
@@ -50,7 +50,7 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
-        // Movimentação com linear velocity
-        rb.velocity = new Vector2(movement.x * moveSpeed, rb.velocity.y);
+        // Movimentaï¿½ï¿½o com linear velocity
+        rb.linearVelocity = new Vector2(movement.x * moveSpeed, rb.linearVelocity.y);
     }
 }
