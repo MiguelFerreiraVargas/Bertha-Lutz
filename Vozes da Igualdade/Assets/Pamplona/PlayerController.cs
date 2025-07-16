@@ -3,54 +3,32 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public float moveSpeed = 5f;
-    public Sprite idleSprite;
-    public Sprite walkSprite;
-    public Sprite upSprite;
-    public Sprite downSprite;
 
     private Rigidbody2D rb;
-    private SpriteRenderer spriteRenderer;
+    private Animator animator;
     private Vector2 movement;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        animator = GetComponent<Animator>();
     }
 
     void Update()
     {
-        // Entrada WASD
+        // Entrada de movimento (WASD ou setas)
         movement = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
 
-        // Trocar sprite de acordo com dire��o
-        if (Input.GetKey(KeyCode.W))
-        {
-            spriteRenderer.sprite = upSprite;
-        }
-        else if (Input.GetKey(KeyCode.S))
-        {
-            spriteRenderer.sprite = downSprite;
-        }
-        else if (movement.x != 0)
-        {
-            spriteRenderer.sprite = walkSprite;
-
-            // Inverter sprite quando andar para a esquerda
-            if (movement.x < 0)
-                spriteRenderer.flipX = true;
-            else if (movement.x > 0)
-                spriteRenderer.flipX = false;
-        }
-        else
-        {
-            spriteRenderer.sprite = idleSprite;
-        }
+        // Define parâmetros no Animator
+        animator.SetFloat("Horizontal", movement.x);
+        animator.SetFloat("Vertical", movement.y);
+        animator.SetFloat("Speed", movement.sqrMagnitude); // 0 se parado, >0 se em movimento
     }
 
     void FixedUpdate()
     {
-        // Movimenta��o com linear velocity
-        rb.linearVelocity = new Vector2(movement.x * moveSpeed, rb.linearVelocity.y);
+        // Movimentação do player
+        rb.linearVelocity = movement * moveSpeed;
     }
 }
+
