@@ -29,7 +29,7 @@ public class PlayerController : MonoBehaviour
         // Agachar
         if (Input.GetKey(KeyCode.S))
         {
-            // Aqui você pode colocar lógica de agachar (ex: mudar tamanho ou sprite)
+            // Mudar tamanho do sprite
             transform.localScale = new Vector3(1f, 0.5f, 1f); // abaixa o tamanho
         }
         else
