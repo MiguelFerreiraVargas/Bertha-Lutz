@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    [Header("Configurações de Movimento")]
+    [Header("Configuraï¿½ï¿½es de Movimento")]
     public float moveSpeed = 5f;
     public float jumpForce = 10f;
 
@@ -50,7 +50,7 @@ public class PlayerController : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.W))
         {
             _spriteRenderer.sprite = jumpSprite;
-            _rb.velocity = new Vector2(_rb.velocity.x, jumpForce);
+            _rb.linearVelocity = new Vector2(_rb.linearVelocity.x, jumpForce);
         }
         // Parado
         else
@@ -64,6 +64,6 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
-        _rb.velocity = new Vector2(_movement.x * moveSpeed, _rb.velocity.y);
+        _rb.linearVelocity = new Vector2(_movement.x * moveSpeed, _rb.linearVelocity.y);
     }
 }
