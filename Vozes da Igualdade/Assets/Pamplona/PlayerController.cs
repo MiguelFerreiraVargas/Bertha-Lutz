@@ -2,54 +2,68 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    [Header("ConfiguraÁıes de Movimento")]
     public float moveSpeed = 5f;
-    public float jumpForce = 5f;
+    public float jumpForce = 10f;
 
-    private Rigidbody2D rb;
-    private Vector2 movement;
-    private bool isGrounded = true;
+    [Header("Sprites do Personagem")]
+    public Sprite idleSprite;   // Parado
+    public Sprite walkSprite;   // Andando
+    public Sprite jumpSprite;   // Pulando
+    public Sprite crouchSprite; // Agachado
+
+    private Rigidbody2D _rb;
+    private SpriteRenderer _spriteRenderer;
+    private Vector2 _movement;
 
     void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
+        _rb = GetComponent<Rigidbody2D>();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     void Update()
     {
-        // Movimento lateral
-        movement = new Vector2(Input.GetAxisRaw("Horizontal"), 0);
+        float moveInput = 0f;
 
-        // Pulo
-        if (Input.GetKeyDown(KeyCode.W) && isGrounded)
+        // Andar para a esquerda
+        if (Input.GetKey(KeyCode.A))
         {
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
-            isGrounded = false;
+            moveInput = -1f;
+            _spriteRenderer.sprite = walkSprite;
+            _spriteRenderer.flipX = true;
         }
-
+        // Andar para a direita
+        else if (Input.GetKey(KeyCode.D))
+        {
+            moveInput = 1f;
+            _spriteRenderer.sprite = walkSprite;
+            _spriteRenderer.flipX = false;
+        }
         // Agachar
-        if (Input.GetKey(KeyCode.S))
+        else if (Input.GetKey(KeyCode.S))
         {
-            // Mudar tamanho do sprite
-            transform.localScale = new Vector3(1f, 0.5f, 1f); // abaixa o tamanho
+            moveInput = 0f;
+            _spriteRenderer.sprite = crouchSprite;
         }
+        // Pular
+        else if (Input.GetKeyDown(KeyCode.W))
+        {
+            _spriteRenderer.sprite = jumpSprite;
+            _rb.velocity = new Vector2(_rb.velocity.x, jumpForce);
+        }
+        // Parado
         else
         {
-            transform.localScale = new Vector3(1f, 1f, 1f); // volta ao normal
+            moveInput = 0f;
+            _spriteRenderer.sprite = idleSprite;
         }
+
+        _movement = new Vector2(moveInput, 0);
     }
 
     void FixedUpdate()
     {
-        // Movimenta no eixo X e mant√©m velocidade Y da f√≠sica
-        rb.linearVelocity = new Vector2(movement.x * moveSpeed, rb.linearVelocity.y);
-    }
-
-    void OnCollisionEnter2D(Collision2D collision)
-    {
-        // Detecta ch√£o
-        if (collision.gameObject.CompareTag("Ground"))
-        {
-            isGrounded = true;
-        }
+        _rb.velocity = new Vector2(_movement.x * moveSpeed, _rb.velocity.y);
     }
 }
