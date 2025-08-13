@@ -7,35 +7,43 @@ public class Player : MonoBehaviour
     private Rigidbody2D rb;
     private bool isJumping;
     [SerializeField] private float jumpForce = 3f;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         isJumping = false;
     }
 
-    // Update is called once per frame
     void Update()
     {
+        // Movimento horizontal
         direcao = Input.GetAxisRaw("Horizontal");
-
         rb.linearVelocity = new Vector2(direcao * speed, rb.linearVelocity.y);
 
-        if (direcao > 0 )
+        // Virar o sprite
+        if (direcao > 0)
         {
-            transform.localScale = new Vector2(1f,1f);
+            transform.localScale = new Vector2(1f, 1f);
         }
-
         else if (direcao < 0)
         {
             transform.localScale = new Vector2(-1f, 1f);
         }
 
-        if (Input.GetButtonDown("Jump")) && isJumping = false;
+        // Pulo
+        if (Input.GetButtonDown("Jump") && !isJumping)
         {
-            rb.linearVelocityY = jumpForce;
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
             isJumping = true;
         }
-        
+    }
+
+    // Detectar se encostou no ch�o
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            isJumping = false;
+        }
     }
 }
