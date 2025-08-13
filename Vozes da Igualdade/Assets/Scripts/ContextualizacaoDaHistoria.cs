@@ -32,10 +32,11 @@ public class ContextualizacaoDaHistoria : MonoBehaviour
     public void MostrarCarta ()
     {
         primeiraPagina.SetActive(true);
+        botaoAveriguar.SetActive(false);
     }
     public void fecharCarta ()
     {
         primeiraPagina.SetActive(false);
-        botaoAveriguar.SetActive(false) ;
+      
     }
 }
