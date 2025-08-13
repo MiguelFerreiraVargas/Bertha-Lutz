@@ -2,68 +2,92 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    [Header("Configura��es de Movimento")]
+    [Header("Configurações de Movimento")]
     public float moveSpeed = 5f;
-    public float jumpForce = 10f;
+    public float jumpForce = 3f;
 
     [Header("Sprites do Personagem")]
-    public Sprite idleSprite;   // Parado
-    public Sprite walkSprite;   // Andando
-    public Sprite jumpSprite;   // Pulando
-    public Sprite crouchSprite; // Agachado
+    public Sprite idleSprite;
+    public Sprite walkSprite;
+    public Sprite jumpSprite;
+    public Sprite crouchSprite;
+
+    [Header("Ground Check")]
+    public Transform groundCheck;            // um empty no pé do player
+    public float groundCheckRadius = 0.12f;
+    public LayerMask groundLayer;            // selecione a layer "Ground" no inspector
 
     private Rigidbody2D _rb;
     private SpriteRenderer _spriteRenderer;
-    private Vector2 _movement;
+    private float _moveInput;
+    private bool _isGrounded;
 
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
+
+        // Garantir que a rotação não vire o player
+        if (_rb != null)
+        {
+            _rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
+            _rb.freezeRotation = true;
+        }
     }
 
     void Update()
     {
-        float moveInput = 0f;
+        // checa se está no chão
+        _isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
 
-        // Andar para a esquerda
+        // movimento horizontal
+        _moveInput = 0f;
         if (Input.GetKey(KeyCode.A))
         {
-            moveInput = -1f;
+            _moveInput = -1f;
             _spriteRenderer.sprite = walkSprite;
             _spriteRenderer.flipX = true;
         }
-        // Andar para a direita
         else if (Input.GetKey(KeyCode.D))
         {
-            moveInput = 1f;
+            _moveInput = 1f;
             _spriteRenderer.sprite = walkSprite;
             _spriteRenderer.flipX = false;
         }
-        // Agachar
         else if (Input.GetKey(KeyCode.S))
         {
-            moveInput = 0f;
+            _moveInput = 0f;
             _spriteRenderer.sprite = crouchSprite;
         }
-        // Pular
-        else if (Input.GetKeyDown(KeyCode.W))
-        {
-            _spriteRenderer.sprite = jumpSprite;
-            _rb.linearVelocity = new Vector2(_rb.linearVelocity.x, jumpForce);
-        }
-        // Parado
         else
         {
-            moveInput = 0f;
-            _spriteRenderer.sprite = idleSprite;
+            // no ar, mantém sprite de pulo
+            if (!_isGrounded)
+                _spriteRenderer.sprite = jumpSprite;
+            else
+                _spriteRenderer.sprite = idleSprite;
         }
 
-        _movement = new Vector2(moveInput, 0);
+        // pular — só se estiver no chão
+        if (Input.GetKeyDown(KeyCode.W) && _isGrounded)
+        {
+            _rb.linearVelocity = new Vector2(_rb.linearVelocity.x, jumpForce);
+            _spriteRenderer.sprite = jumpSprite;
+        }
     }
 
     void FixedUpdate()
     {
-        _rb.linearVelocity = new Vector2(_movement.x * moveSpeed, _rb.linearVelocity.y);
+        // aplica movimento horizontal preservando velocidade vertical
+        _rb.linearVelocity = new Vector2(_moveInput * moveSpeed, _rb.linearVelocity.y);
+    }
+
+    void OnDrawGizmosSelected()
+    {
+        if (groundCheck != null)
+        {
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
+        }
     }
 }
