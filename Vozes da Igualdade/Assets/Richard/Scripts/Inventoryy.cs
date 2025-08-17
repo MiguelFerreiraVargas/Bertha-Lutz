@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static UnityEditor.Progress;
 
-public class Inventory : MonoBehaviour
+public class Inventoryy : MonoBehaviour
 {
     [System.Serializable]
     public class Item
@@ -29,7 +29,7 @@ public class Inventory : MonoBehaviour
     {
         if (items.Count >= maxSlots)
         {
-            Debug.Log("Inventário cheio!");
+            Debug.Log("Inventario cheio!");
             return;
         }
 
