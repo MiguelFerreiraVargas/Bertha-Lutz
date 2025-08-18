@@ -4,9 +4,9 @@ using UnityEngine.UI;
 
 public class InventoryController: MonoBehaviour
 {
- public Inventoryy inventoryy;   // referência ao script Inventory do Player
-    public GameObject slotPrefab;   // prefab do slot
-    public Transform slotsParent;   // Grid onde os slots ficarão
+ public Inventoryy inventoryy;  
+    public GameObject slotPrefab;   
+    public Transform slotsParent;   
     private List<GameObject> slots = new List<GameObject>();
     public GameObject inventoryPanel;
 
