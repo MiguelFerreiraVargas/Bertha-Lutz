@@ -1,49 +1,34 @@
 using UnityEngine;
-
-public class Player : MonoBehaviour
+public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] private float speed = 5f;
-    private float direcao;
-    private Rigidbody2D rb;
-    private bool isJumping;
-    [SerializeField] private float jumpForce = 3f;
-
-    void Start()
+    public float MovementSpeed = 1f;
+    public float JumpForce = 1f;
+    private Rigidbody2D rigidbody;
+    private void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
-        isJumping = false;
+        rigidbody = GetComponent<Rigidbody2D>();
     }
-
-    void Update()
+    private void Update()
     {
-        // Movimento horizontal
-        direcao = Input.GetAxisRaw("Horizontal");
-        rb.linearVelocity = new Vector2(direcao * speed, rb.linearVelocity.y);
-
-        // Virar o sprite
-        if (direcao > 0)
+        //Movimento para a Esquerda - Direita
+        var movement = Input.GetAxis("Horizontal");
+        transform.position += new Vector3(movement, 0, 0) * Time.deltaTime * MovementSpeed;
+        //Agachar e correr
+        if (Input.GetKey("left ctrl"))
         {
-            transform.localScale = new Vector2(1f, 1f);
+            MovementSpeed = 2;
         }
-        else if (direcao < 0)
+        else if (Input.GetKey("left shift"))
         {
-            transform.localScale = new Vector2(-1f, 1f);
+            MovementSpeed = 10;
         }
-
-        // Pulo
-        if (Input.GetButtonDown("Jump") && !isJumping)
+        else
         {
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
-            isJumping = true;
+            MovementSpeed = 5;
         }
-    }
-
-    // Detectar se encostou no ch�o
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Ground"))
+        if (Input.GetButtonDown("Jump") && Mathf.Abs(rigidbody.linearVelocity.y) < 0.001f)
         {
-            isJumping = false;
+            rigidbody.AddForce(new Vector2(0, JumpForce), ForceMode2D.Impulse);
         }
     }
 }
