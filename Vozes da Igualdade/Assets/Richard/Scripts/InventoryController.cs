@@ -42,7 +42,7 @@ public class InventoryController : MonoBehaviour
 
         for (int i = 0; i < slots.Count; i++)
         {
-            Image icon = slots[i].transform.GetChild(0).GetComponent<Image>();
+            Image icon = slots[i].transform.GetChild(1).GetComponent<Image>();
 
             if (i < inventoryy.items.Count)
             {

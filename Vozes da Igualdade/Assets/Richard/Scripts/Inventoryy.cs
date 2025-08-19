@@ -7,6 +7,7 @@ public class Inventoryy : MonoBehaviour
     [System.Serializable]
     public class Item
     {
+        public int quantity = 1;
         public string name;
         public int id;
         public string description;
@@ -24,18 +25,28 @@ public class Inventoryy : MonoBehaviour
     }
 
     public int maxSlots = 6;            
-    public List<Item> items = new List<Item>();  
-       public void AddItem(string name, int id, string description, Sprite icon, int value)
+    public List<Item> items = new List<Item>();
+    public void AddItem(string name, int id, string description, Sprite icon, int value)
     {
-        if (items.Count >= maxSlots)
+        // Busca item existente pelo ID
+        Item existingItem = items.Find(item => item.id == id);
+
+        if (existingItem != null)
         {
-            Debug.Log("Inventario cheio!");
-            return;
+            existingItem.quantity++;
+            Debug.Log($"Quantidade do item {name} aumentada para {existingItem.quantity}");
         }
+        else
+        {
+            if (items.Count >= maxSlots)
+            {
+                Debug.Log("Inventário cheio!");
+                return;
+            }
 
-        Item newItem = new Item(name, id, description, icon, value);
-        items.Add(newItem);
-        Debug.Log($"Item adicionado: {name} (ID: {id})");
+            Item newItem = new Item(name, id, description, icon, value);
+            items.Add(newItem);
+            Debug.Log($"Item adicionado: {name} (ID: {id})");
+        }
     }
-
 }
