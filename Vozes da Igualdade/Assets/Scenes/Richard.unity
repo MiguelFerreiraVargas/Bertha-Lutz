@@ -131,7 +131,7 @@ GameObject:
   - component: {fileID: 846442}
   - component: {fileID: 846441}
   m_Layer: 0
-  m_Name: Square (7)
+  m_Name: sfdok
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -265,7 +265,7 @@ GameObject:
   - component: {fileID: 10733805}
   - component: {fileID: 10733804}
   m_Layer: 0
-  m_Name: Square (3)
+  m_Name: sfdok
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -399,7 +399,7 @@ GameObject:
   - component: {fileID: 30229686}
   - component: {fileID: 30229685}
   m_Layer: 0
-  m_Name: Square (2)
+  m_Name: sfdok
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1319,7 +1319,7 @@ GameObject:
   - component: {fileID: 918378778}
   - component: {fileID: 918378777}
   m_Layer: 0
-  m_Name: Square (6)
+  m_Name: sfdok
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1453,7 +1453,7 @@ GameObject:
   - component: {fileID: 935343401}
   - component: {fileID: 935343400}
   m_Layer: 0
-  m_Name: Square (4)
+  m_Name: sfdok
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2022,7 +2022,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -252, y: -160.21}
+  m_AnchoredPosition: {x: -336, y: -187.57}
   m_SizeDelta: {x: 361.73, y: 76.57}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1386578391
@@ -2369,13 +2369,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1668715601}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.09453422, y: -0.09964515, z: 0.0402088}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -14.387474, y: -5.022115, z: -4533.973}
+  m_LocalScale: {x: 50.399998, y: 50.399998, z: 50.399998}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1271321532}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1990618846}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1755381437
 GameObject:
@@ -2389,7 +2389,7 @@ GameObject:
   - component: {fileID: 1755381439}
   - component: {fileID: 1755381438}
   m_Layer: 0
-  m_Name: Square (5)
+  m_Name: sfdok
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3072,6 +3072,7 @@ RectTransform:
   - {fileID: 250263303}
   - {fileID: 1643636754}
   - {fileID: 1188549363}
+  - {fileID: 1668715602}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -3285,6 +3286,5 @@ SceneRoots:
   - {fileID: 350901414}
   - {fileID: 745219837}
   - {fileID: 1990618846}
-  - {fileID: 1668715602}
   - {fileID: 2105375665}
   - {fileID: 943639396}
