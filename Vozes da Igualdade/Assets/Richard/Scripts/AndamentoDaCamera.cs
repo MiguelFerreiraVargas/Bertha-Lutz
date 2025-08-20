@@ -3,7 +3,7 @@ using UnityEngine;
 public class AndamentoDaCamera : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    public Transform target;       // O player ou trailer
+    public Transform target;       
     public Vector3 offset;         // Distância da câmera em relação ao alvo
     public float smoothSpeed = 0.125f;
 
