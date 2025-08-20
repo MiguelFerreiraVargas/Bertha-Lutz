@@ -37,6 +37,6 @@ public class ContextualizacaoDaHistoria : MonoBehaviour
     public void fecharCarta ()
     {
         primeiraPagina.SetActive(false);
-      
+    
     }
 }
