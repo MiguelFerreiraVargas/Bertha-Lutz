@@ -18,15 +18,13 @@ public class InventoryController : MonoBehaviour
     {
         if (!slotsCreated)
         {
-            for (int i = 0; i < inventoryy.maxSlots; i++)
+            for (int i = 0; i < 5 ; i++)
             {
                 GameObject slot = Instantiate(slotPrefab, slotsParent);
                 slots.Add(slot);
             }
             slotsCreated = true;
         }
-
-        inventoryPanel.SetActive(isOpen);
 
         inventoryPanel.SetActive(isOpen);
     }
@@ -39,10 +37,9 @@ public class InventoryController : MonoBehaviour
             inventoryPanel.SetActive(isOpen);
             Debug.Log("Inventário alternado: " + isOpen);
         }
-
         for (int i = 0; i < slots.Count; i++)
         {
-            Image icon = slots[i].transform.GetChild(1).GetComponent<Image>();
+            Image icon = slots[i].transform.GetChild(0).GetComponent<Image>();
 
             if (i < inventoryy.items.Count)
             {

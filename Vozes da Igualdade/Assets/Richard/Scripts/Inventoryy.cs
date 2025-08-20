@@ -28,7 +28,7 @@ public class Inventoryy : MonoBehaviour
     public List<Item> items = new List<Item>();
     public void AddItem(string name, int id, string description, Sprite icon, int value)
     {
-        // Busca item existente pelo ID
+        
         Item existingItem = items.Find(item => item.id == id);
 
         if (existingItem != null)
@@ -40,7 +40,7 @@ public class Inventoryy : MonoBehaviour
         {
             if (items.Count >= maxSlots)
             {
-                Debug.Log("Inventário cheio!");
+                Debug.Log("Inventï¿½rio cheio!");
                 return;
             }
 
