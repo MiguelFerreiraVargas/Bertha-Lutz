@@ -41,8 +41,17 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: 'Ordem dos Objetos '
+  - name: BackGround
     uniqueID: 1500919821
+    locked: 0
+  - name: Floor
+    uniqueID: 3685625153
+    locked: 0
+  - name: Objects
+    uniqueID: 323917673
+    locked: 0
+  - name: Complemento
+    uniqueID: 4149387025
     locked: 0
   m_RenderingLayers:
   - Default

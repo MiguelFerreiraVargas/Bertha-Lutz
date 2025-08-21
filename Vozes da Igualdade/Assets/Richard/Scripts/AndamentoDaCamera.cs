@@ -4,7 +4,7 @@ public class AndamentoDaCamera : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public Transform target;       
-    public Vector3 offset;         // Distância da câmera em relação ao alvo
+    public Vector3 offset;         // Distï¿½ncia da cï¿½mera em relaï¿½ï¿½o ao alvo
     public float smoothSpeed = 0.125f;
 
     void LateUpdate()
@@ -13,6 +13,6 @@ public class AndamentoDaCamera : MonoBehaviour
         Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed);
 
         transform.position = smoothedPosition;
-        transform.LookAt(target); // Opcional: se quiser que a câmera "olhe" para o alvo
+        transform.LookAt(target); // Opcional: se quiser que a cï¿½mera "olhe" para o alvo
     }
 }
