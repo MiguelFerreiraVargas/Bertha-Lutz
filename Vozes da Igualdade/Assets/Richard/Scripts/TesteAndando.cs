@@ -16,8 +16,8 @@ public class TesteAndando : MonoBehaviour
     void Update()
     {
         // Aqui só lemos o input do jogador (não movemos ainda)
-        float x = Input.GetAxis("Horizontal"); // A/D ou setas → -1 a 1
-        float y = Input.GetAxis("Vertical");   // W/S ou setas → -1 a 1
+        float x = Input.GetAxisRaw("Horizontal"); // A/D ou setas → -1 a 1
+        float y = Input.GetAxisRaw("Vertical");   // W/S ou setas → -1 a 1
 
         movement = new Vector2(x, y).normalized; 
         // normalized garante que andar na diagonal não fique mais rápido

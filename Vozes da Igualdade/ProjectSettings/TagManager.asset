@@ -53,5 +53,8 @@ TagManager:
   - name: Complemento
     uniqueID: 4149387025
     locked: 0
+  - name: Barra de Vida
+    uniqueID: 1187065229
+    locked: 0
   m_RenderingLayers:
   - Default

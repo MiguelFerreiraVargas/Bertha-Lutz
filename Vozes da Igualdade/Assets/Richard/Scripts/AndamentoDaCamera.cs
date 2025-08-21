@@ -5,9 +5,9 @@ public class AndamentoDaCamera : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public Transform target;       
     public Vector3 offset;         // Dist�ncia da c�mera em rela��o ao alvo
-    public float smoothSpeed = 0.125f;
+    public float smoothSpeed = 0.200f;
 
-    void LateUpdate()
+    void Update()
     {
         Vector3 desiredPosition = target.position + offset;
         Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed);

@@ -1,11 +1,13 @@
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro; 
 
 public class BarraDeVida : MonoBehaviour
 {
     public Slider slider; 
     public float sanity = 100f;// float pois o jogador não se movimenta no eixo x 0.1 unidades no trecho de um frame
-    public float sanityMax = 100f; 
+    public float sanityMax = 100f;
+    [SerializeField] TMP_Text contadorSanidade; 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
     // Update is called once per frame
@@ -23,5 +25,6 @@ public class BarraDeVida : MonoBehaviour
         sanity = Mathf.Clamp(sanity, 0, sanityMax);// limita a vida para menos q 0 
         slider.value = sanity;
         slider.maxValue = sanityMax;
+        contadorSanidade.text = $"{sanity}/{sanityMax}";
     }
 }
