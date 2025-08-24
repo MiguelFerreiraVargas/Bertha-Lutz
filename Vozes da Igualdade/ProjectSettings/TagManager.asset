@@ -56,5 +56,11 @@ TagManager:
   - name: Barra de Vida
     uniqueID: 1187065229
     locked: 0
+  - name: Player
+    uniqueID: 3725175287
+    locked: 0
+  - name: ColliderWalls
+    uniqueID: 2680634549
+    locked: 0
   m_RenderingLayers:
   - Default
