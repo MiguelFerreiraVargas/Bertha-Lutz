@@ -7,9 +7,14 @@ public class BarraDeVida : MonoBehaviour
     public Slider slider; 
     public float sanity = 100f;// float pois o jogador não se movimenta no eixo x 0.1 unidades no trecho de um frame
     public float sanityMax = 100f;
-    [SerializeField] TMP_Text contadorSanidade; 
+    [SerializeField] TMP_Text contadorSanidade;
+    [SerializeField] GameObject feedbackVisual;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
+    void Start()
+    {
+        feedbackVisual.gameObject.SetActive(false);
+    }
     // Update is called once per frame
     private void Update()
     {
@@ -26,5 +31,10 @@ public class BarraDeVida : MonoBehaviour
         slider.value = sanity;
         slider.maxValue = sanityMax;
         contadorSanidade.text = $"{sanity}/{sanityMax}";
+        if (sanity <50)
+        {
+            feedbackVisual.gameObject.SetActive(true);
+        }
+       
     }
 }
