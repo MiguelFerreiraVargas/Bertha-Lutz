@@ -17,6 +17,7 @@ public class ItensColetáveis : MonoBehaviour
             {
                 inventory.AddItem(itemName, itemId, description, icon, value);
                 Destroy(gameObject); // remove o item da cena
+                Debug.Log("Objeto feito!");
             }
         }
     }
