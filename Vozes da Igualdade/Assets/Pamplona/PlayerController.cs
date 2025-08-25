@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour
     [Header("Ground Check")]
     public Transform groundCheck;            // um empty no pé do player
     public float groundCheckRadius = 0.12f;
-    public LayerMask groundLayer;            // selecione a layer "Ground" no inspector
+    public LayerMask groundLayer;           
 
     private Rigidbody2D _rb;
     private SpriteRenderer _spriteRenderer;
