@@ -4,25 +4,7 @@ using static UnityEditor.Progress;
 
 public class Inventoryy : MonoBehaviour
 {
-    [System.Serializable]
-    public class Item
-    {
-        public int quantity = 1;
-        public string name;
-        public int id;
-        public string description;
-        public Sprite icon;
-        public int value;
-
-        public Item(string name, int id, string description, Sprite icon, int value)
-        {
-            this.name = name;
-            this.id = id;
-            this.description = description;
-            this.icon = icon;
-            this.value = value;
-        }
-    }
+    
 
     public int maxSlots = 6;            
     public List<Item> items = new List<Item>();
@@ -48,5 +30,24 @@ public class Inventoryy : MonoBehaviour
             items.Add(newItem);
             Debug.Log($"Item adicionado: {name} (ID: {id})");
         }
+    }
+}
+[System.Serializable]
+public class Item
+{
+    public int quantity = 1;
+    public string name;
+    public int id;
+    public string description;
+    public Sprite icon;
+    public int value;
+
+    public Item(string name, int id, string description, Sprite icon, int value)
+    {
+        this.name = name;
+        this.id = id;
+        this.description = description;
+        this.icon = icon;
+        this.value = value;
     }
 }
