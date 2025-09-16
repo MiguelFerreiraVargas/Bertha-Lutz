@@ -6,6 +6,8 @@ public class ContextualizacaoDaHistoria : MonoBehaviour
     [SerializeField] GameObject primeiraPagina;
     [SerializeField] GameObject botaoAveriguar;
     [SerializeField] GameObject objetoTeste;
+    Item item;
+    Inventoryy inventoryy; 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -21,22 +23,15 @@ public class ContextualizacaoDaHistoria : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Mostre(); 
+            // Pega o inventário do Player
+            Inventoryy playerInventory = other.GetComponent<Inventoryy>();
+            if (playerInventory != null)
+            {
+                //bool item1 = 
+
+               
+            }
         }
-  
     }
-    void Mostre ()
-    {
-        botaoAveriguar.SetActive(true);
-    }
-    public void MostrarCarta ()
-    {
-        primeiraPagina.SetActive(true);
-        botaoAveriguar.SetActive(false);
-    }
-    public void fecharCarta ()
-    {
-        primeiraPagina.SetActive(false);
-    
-    }
+   
 }
