@@ -5,7 +5,7 @@ using static UnityEditor.Progress;
 public class Inventoryy : MonoBehaviour
 {
     public int maxSlots = 6;            
-    public List<Item> items = new List<Item>();
+    [SerializeField] public List<Item> items = new List<Item>();
     public void AddItem(string name, int id, string description, Sprite icon, int value)
     {
         
