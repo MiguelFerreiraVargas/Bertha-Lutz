@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class ContextualizacaoDaHistoria : MonoBehaviour
 {
-  // [SerializeField] GameObject primeiraPagina;
+  //[SerializeField] GameObject primeiraPagina;
   //[SerializeField] GameObject botaoAveriguar;
-  //  [SerializeField] GameObject objetoTeste;
+  //[SerializeField] GameObject objetoTeste;
     Item item;
-    Inventoryy inventoryy; 
+    Inventoryy inventoryy;
+    private bool itemId = false; 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -34,10 +35,10 @@ public class ContextualizacaoDaHistoria : MonoBehaviour
    void ItemsCountT ()
     {
         int tamanho = inventoryy.items.Count;
-        // Pega o inventário do Player
-        if (tamanho != 0)
+        if (tamanho == 1 && inventoryy.items[0].id == 0)
         {
-            Debug.Log("sdhdvsudf");
+
+            Debug.Log("LALALALALLAL");
         }
     }
 }
