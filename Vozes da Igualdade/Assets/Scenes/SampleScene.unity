@@ -4867,8 +4867,8 @@ Transform:
   m_GameObject: {fileID: 1985601362}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -16.26, y: -2.11, z: 0.976663}
-  m_LocalScale: {x: 1, y: 11.342031, z: 1}
+  m_LocalPosition: {x: -16.26, y: -2.284, z: 0.976663}
+  m_LocalScale: {x: 1, y: 11.69023, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2103680077}
@@ -5023,7 +5023,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Banana
   itemId: 0
-  description: 
+  description: yyukzxcyewdw3tw67ujmn
   icon: {fileID: -212959971, guid: 21e3c758fa9bdcb4aa723aa1d453af74, type: 3}
   value: 0
 --- !u!114 &2038731281
