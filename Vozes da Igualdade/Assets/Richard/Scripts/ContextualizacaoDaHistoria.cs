@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class ContextualizacaoDaHistoria : MonoBehaviour
 {
-   // [SerializeField] GameObject primeiraPagina;
- //   [SerializeField] GameObject botaoAveriguar;
+  // [SerializeField] GameObject primeiraPagina;
+  //[SerializeField] GameObject botaoAveriguar;
   //  [SerializeField] GameObject objetoTeste;
     Item item;
     Inventoryy inventoryy; 
@@ -33,10 +33,8 @@ public class ContextualizacaoDaHistoria : MonoBehaviour
     }
    void ItemsCountT ()
     {
-
         int tamanho = inventoryy.items.Count;
         // Pega o inventário do Player
-       
         if (tamanho != 0)
         {
             Debug.Log("sdhdvsudf");
