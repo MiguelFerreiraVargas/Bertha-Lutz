@@ -1,41 +1,180 @@
 using UnityEngine;
+using UnityEngine.AI;
 
-public class EnemieFollowing : MonoBehaviour
+[RequireComponent(typeof(NavMeshAgent))]
+public class EnemyAI_2025 : MonoBehaviour
 {
-    [SerializeField] private float speed = 9;
+    public enum EnemyState { Chasing, Patrolling, Searching }
 
-    [SerializeField] private Transform target;
+    [Header("Configurações de Detecção")]
+    public float chaseSpeed = 3.5f;
+    public float patrolSpeed = 1.5f;
+    public float detectionRange = 5f;
+    public float searchTime = 3f;
 
-    void Awake()
+    [Header("Waypoints de Patrulha")]
+    public Transform[] waypoints;
+
+    private EnemyState currentState = EnemyState.Patrolling;
+    private Transform player;
+    private HideInside playerHideScript;
+    private NavMeshAgent agent;
+    private int currentWaypointIndex = 0;
+    private float searchTimer = 0f;
+    private Vector3 lastKnownPosition;
+
+    void Start()
     {
-        target = GameObject.FindGameObjectWithTag("Player").transform;
+        agent = GetComponent<NavMeshAgent>();
+        player = GameObject.FindGameObjectWithTag("Player").transform;
+        playerHideScript = player.GetComponent<HideInside>();
+
+        // Configurações importantes para 2D
+        agent.updateRotation = false;
+        agent.updateUpAxis = false;
+
+        StartPatrol();
     }
 
     void Update()
     {
-        if (target == null) return;
+        if (player == null) return;
 
-        transform.position = Vector3.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
+        bool playerIsHidden = playerHideScript != null && playerHideScript.isHidden;
+
+        switch (currentState)
+        {
+            case EnemyState.Chasing:
+                HandleChaseState(playerIsHidden);
+                break;
+
+            case EnemyState.Patrolling:
+                HandlePatrolState(playerIsHidden);
+                break;
+
+            case EnemyState.Searching:
+                HandleSearchState();
+                break;
+        }
     }
 
-    // Este método é chamado automaticamente quando o colisor do inimigo (Is Trigger) colide com outro objeto.
-    private void OnTriggerEnter2D(Collider2D other)
+    void HandleChaseState(bool playerIsHidden)
     {
-        // Verifica se o objeto colidido é o jogador (pela sua tag).
-        if (other.gameObject.CompareTag("Player"))
+        if (playerIsHidden)
         {
-            // Pega o script de barra de vida do jogador.
-            Sanidade playerHealth = other.gameObject.GetComponent<Sanidade>();
-
-            // Verifica se o script existe para evitar erros.
-            if (playerHealth != null)
-            {
-                // Chama o método para causar dano ao jogador.
-                playerHealth.TakeDamage(10); // Causa 10 de dano, você pode ajustar esse valor.
-            }
-
-            // Destrói o inimigo para que ele suma da tela após a colisão.
-            Destroy(gameObject);
+            // Player se escondeu, ir para última posição conhecida
+            lastKnownPosition = player.position;
+            SwitchToSearch();
         }
+        else
+        {
+            // Continuar perseguindo
+            agent.speed = chaseSpeed;
+            agent.SetDestination(player.position);
+        }
+    }
+
+    void HandlePatrolState(bool playerIsHidden)
+    {
+        if (!playerIsHidden && IsPlayerInRange())
+        {
+            SwitchToChase();
+        }
+        else
+        {
+            Patrol();
+        }
+    }
+
+    void HandleSearchState()
+    {
+        searchTimer -= Time.deltaTime;
+
+        if (searchTimer <= 0f)
+        {
+            // Tempo de busca acabou, voltar a patrulhar
+            SwitchToPatrol();
+        }
+        else if (agent.remainingDistance < 0.5f)
+        {
+            // Chegou na última posição, procurar aleatoriamente
+            SearchRandomly();
+        }
+    }
+
+    bool IsPlayerInRange()
+    {
+        float distance = Vector2.Distance(transform.position, player.position);
+        return distance <= detectionRange;
+    }
+
+    void Patrol()
+    {
+        if (waypoints.Length == 0) return;
+
+        agent.speed = patrolSpeed;
+        agent.SetDestination(waypoints[currentWaypointIndex].position);
+
+        // Verificar se chegou no waypoint
+        if (agent.remainingDistance < 0.3f && !agent.pathPending)
+        {
+            currentWaypointIndex = (currentWaypointIndex + 1) % waypoints.Length;
+        }
+    }
+
+    void SearchRandomly()
+    {
+        // Busca em pontos aleatórios ao redor da última posição
+        Vector2 randomPoint = lastKnownPosition + (Vector3)Random.insideUnitCircle * 2f;
+        agent.SetDestination(randomPoint);
+    }
+
+    void SwitchToChase()
+    {
+        currentState = EnemyState.Chasing;
+        agent.speed = chaseSpeed;
+        Debug.Log("Inimigo: Perseguindo player!");
+    }
+
+    void SwitchToPatrol()
+    {
+        currentState = EnemyState.Patrolling;
+        agent.speed = patrolSpeed;
+        StartPatrol();
+        Debug.Log("Inimigo: Voltando a patrulhar");
+    }
+
+    void SwitchToSearch()
+    {
+        currentState = EnemyState.Searching;
+        agent.speed = patrolSpeed;
+        searchTimer = searchTime;
+        agent.SetDestination(lastKnownPosition);
+        Debug.Log("Inimigo: Procurando na última posição");
+    }
+
+    void StartPatrol()
+    {
+        if (waypoints.Length > 0)
+        {
+            currentWaypointIndex = Random.Range(0, waypoints.Length);
+        }
+    }
+
+    void OnDrawGizmosSelected()
+    {
+        // Alcance de detecção
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, detectionRange);
+
+        // Estado atual
+        Gizmos.color = currentState switch
+        {
+            EnemyState.Chasing => Color.red,
+            EnemyState.Patrolling => Color.blue,
+            EnemyState.Searching => Color.yellow,
+            _ => Color.white
+        };
+        Gizmos.DrawWireSphere(transform.position, 0.3f);
     }
 }
