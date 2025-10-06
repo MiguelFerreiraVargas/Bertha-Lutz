@@ -17,7 +17,7 @@ public class ContextualizacaoDaHistoria : MonoBehaviour
             inventoryy = other.GetComponent<Inventoryy>();
             if (inventoryy != null )
             {
-                ItemsCountT();
+                ItemsCountT(); 
             }
         }
     }
