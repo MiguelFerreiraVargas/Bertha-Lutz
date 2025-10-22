@@ -22,7 +22,7 @@ public class TextManager : MonoBehaviour
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
 
-        dialogueBox.SetActive(true);
+        dialogueBox.SetActive(tr);
     }
 
     private void Update()
