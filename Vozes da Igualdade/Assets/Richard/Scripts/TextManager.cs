@@ -1,72 +1,83 @@
 using TMPro;
 using UnityEngine;
-using System.Collections; 
+using System.Collections;
 
-public class TextManager: MonoBehaviour
+public class TextManager : MonoBehaviour
 {
-        public static TextManager Instance;
+    public static TextManager Instance;
 
-        public GameObject dialogueBox;
-        public TextMeshProUGUI dialogueText;
-        public float typingSpeed = 0.04f;
+    [Header("UI Elements")]
+    public GameObject dialogueBox;
+    public TextMeshProUGUI dialogueText;
 
-        private string[] lines;
-        private int currentLine;
-        private bool isTyping;
+    [Header("Typing Settings")]
+    public float typingSpeed = 0.04f; // Tempo entre cada letra
 
-        void Awake()
+    private string[] lines;
+    private int currentLine;
+    public bool isTyping { get; private set; }
+
+    private void Awake()
+    {
+        if (Instance == null) Instance = this;
+        else Destroy(gameObject);
+
+        dialogueBox.SetActive(true);
+    }
+
+    private void Update()
+    {
+        if (!dialogueBox.activeSelf) return;
+
+        if (Input.GetKeyDown(KeyCode.E))
         {
-            if (Instance == null) Instance = this;
-            else Destroy(gameObject);
-
-            dialogueBox.SetActive(false);
-        }
-
-        void Update()
-        {
-            if (dialogueBox.activeSelf && Input.GetKeyDown(KeyCode.E))
+            if (isTyping)
             {
-                if (isTyping)
+                // Pula a digitação
+                StopAllCoroutines();
+                dialogueText.text = lines[currentLine];
+                isTyping = false;
+            }
+            else
+            {
+                currentLine++;
+                if (lines != null && currentLine < lines.Length)
                 {
-                    StopAllCoroutines();
-                    dialogueText.text = lines[currentLine];
-                    isTyping = false;
+                    StartCoroutine(TypeLine(lines[currentLine]));
                 }
                 else
                 {
-                    currentLine++;
-                    if (currentLine < lines.Length)
-                    {
-                        StartCoroutine(TypeLine(lines[currentLine]));
-                    }
-                    else
-                    {
-                        dialogueBox.SetActive(false);
-                    }
+                    dialogueBox.SetActive(false);
                 }
             }
         }
-
-        public void StartDialogue(string[] dialogueLines)
-        {
-            lines = dialogueLines;
-            currentLine = 0;
-            dialogueBox.SetActive(true);
-            StartCoroutine(TypeLine(lines[currentLine]));
-        }
-
-        IEnumerator TypeLine(string line)
-        {
-            dialogueText.text = "";
-            isTyping = true;
-
-            foreach (char c in line)
-            {
-                dialogueText.text += c;
-                yield return new WaitForSeconds(typingSpeed);
-            }
-
-            isTyping = false;
-        }
     }
 
+    public void StartDialogue(string[] dialogueLines)
+    {
+        if (dialogueLines == null || dialogueLines.Length == 0)
+        {
+            Debug.LogWarning("StartDialogue chamado com array vazio ou nulo!");
+            return;
+        }
+
+        lines = dialogueLines;
+        currentLine = 0;
+        dialogueBox.SetActive(true);
+        StartCoroutine(TypeLine(lines[currentLine]));
+    }
+
+    private IEnumerator TypeLine(string line)
+    {
+        dialogueText.text = "";
+        isTyping = true;
+
+        foreach (char c in line)
+        {
+            dialogueText.text += c;
+            yield return new WaitForSeconds(typingSpeed);
+        }
+
+        isTyping = false;
+    }
+}
