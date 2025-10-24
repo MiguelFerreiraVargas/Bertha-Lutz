@@ -7,7 +7,7 @@ public class CondicaoDeSaida : MonoBehaviour
     public int itemIdParaVencer;  // ID do item que abre a porta
 
     [SerializeField] private GameObject porta;  // porta a ser desativada
-
+    Texting texting;
     private void Start()
     {
         if (porta != null)

@@ -5,14 +5,31 @@ public class Texting : MonoBehaviour
     [TextArea(2, 5)]
     public string[] lines;
 
-    private bool hasInteracted = false;
+    private bool playerInRange = false;
 
-    public void Interact()
+    void Update()
     {
-        if (hasInteracted) return;
+        if (playerInRange && Input.GetKeyDown(KeyCode.E))
+        {
+            if (TextManager.Instance != null)
+                TextManager.Instance.StartDialogue(lines);
+        }
+    }
 
-        hasInteracted = true;
-        TextManager.Instance.StartDialogue(lines);
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            playerInRange = true;
+        }
+    }
 
+    void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            playerInRange = false;
+        }
     }
 }
+
