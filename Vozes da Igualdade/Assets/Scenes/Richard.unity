@@ -366,7 +366,6 @@ GameObject:
   - component: {fileID: 745219833}
   - component: {fileID: 745219839}
   - component: {fileID: 745219840}
-  - component: {fileID: 745219841}
   m_Layer: 0
   m_Name: pLayerPrototip
   m_TagString: Player
@@ -559,22 +558,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d66aa38fcf012b44283fbdea3d60e5be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DialogueManager
-  texting: {fileID: 0}
-  playerInRange: 0
---- !u!114 &745219841
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 745219832}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 90c1914ae719282449cbf8ef56c7130e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Texting
-  lines:
-  - cfm,.;/dfgjsadfg
 --- !u!1 &811675506
 GameObject:
   m_ObjectHideFlags: 0
@@ -693,9 +676,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 9.7, y: -0.5}
+  m_AnchoredPosition: {x: 11.042862, y: 3.8714395}
   m_SizeDelta: {x: 0.9799, y: 0.9397}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 1.1427208, y: 2.6817656}
 --- !u!61 &1384602937
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -813,7 +796,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Texting
   lines:
-  - "jkljjuyrteatsdyfugjkl\xE7~]L\xE7]]~\xE7lytssas"
+  - The airport is about to close right know. The exit is near to the door right
+    there. Thanks for choosing us to travel!
 --- !u!1 &1681559815
 GameObject:
   m_ObjectHideFlags: 0
@@ -1088,8 +1072,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 177, y: -91.725006}
-  m_SizeDelta: {x: 502.53, y: 183.45}
+  m_AnchoredPosition: {x: 203.6, y: -122}
+  m_SizeDelta: {x: 375.33, y: 23.83}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1762629983
 MonoBehaviour:
