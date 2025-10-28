@@ -19,9 +19,6 @@ public class TextManager : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance == null) Instance = this;
-        else Destroy(gameObject);
-
         dialogueBox.SetActive(false);
     }
 

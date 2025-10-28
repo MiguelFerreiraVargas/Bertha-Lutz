@@ -12,9 +12,10 @@ public class DialogueManager : MonoBehaviour
     private bool playerInRange = false;
     private bool dialogueStarted = false;
 
+    public TextManager textManager; // Arraste no Inspector
+
     private void Update()
     {
-        // Verifica se o jogador está na área e apertou a tecla para iniciar o diálogo
         if (playerInRange && !dialogueStarted && Input.GetKeyDown(teclaInteracao))
         {
             IniciarDialogo();
@@ -23,12 +24,8 @@ public class DialogueManager : MonoBehaviour
 
     private void IniciarDialogo()
     {
-        if (TextManager.Instance != null)
-        {
-            dialogueStarted = true;
-            TextManager.Instance.StartDialogue(falas);
-        }
-    
+        dialogueStarted = true;
+        textManager.StartDialogue(falas);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -36,7 +33,15 @@ public class DialogueManager : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             playerInRange = true;
-            // Aqui você pode ativar um ícone de "Pressione E"
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            playerInRange = false;
+            dialogueStarted = false; // Permite reiniciar diálogo ao sair e voltar
         }
     }
 }

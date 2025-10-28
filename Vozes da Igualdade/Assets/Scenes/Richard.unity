@@ -275,7 +275,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DialogueManager
   falas:
   - trduyilhok
+  - trduyilhok
   teclaInteracao: 101
+  textManager: {fileID: 811675510}
 --- !u!1 &305970128
 GameObject:
   m_ObjectHideFlags: 0
@@ -433,6 +435,7 @@ MonoBehaviour:
   falas:
   - dfjhfdghf
   teclaInteracao: 101
+  textManager: {fileID: 811675510}
 --- !u!1 &350901411
 GameObject:
   m_ObjectHideFlags: 0
@@ -679,7 +682,6 @@ GameObject:
   - component: {fileID: 745219834}
   - component: {fileID: 745219833}
   - component: {fileID: 745219839}
-  - component: {fileID: 745219840}
   m_Layer: 0
   m_Name: pLayerPrototip
   m_TagString: Player
@@ -860,20 +862,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxSlots: 6
   items: []
---- !u!114 &745219840
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 745219832}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d66aa38fcf012b44283fbdea3d60e5be, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DialogueManager
-  falas: []
-  teclaInteracao: 101
 --- !u!1 &811675506
 GameObject:
   m_ObjectHideFlags: 0
@@ -1251,6 +1239,7 @@ MonoBehaviour:
   falas:
   - fhcygik.uygijkl
   teclaInteracao: 101
+  textManager: {fileID: 811675510}
 --- !u!1 &1681559815
 GameObject:
   m_ObjectHideFlags: 0
