@@ -274,10 +274,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DialogueManager
   falas:
-  - trduyilhok
-  - trduyilhok
+  - "\xC9 cada loucura que somos obrigados a ver... \n"
   teclaInteracao: 101
-  textManager: {fileID: 811675510}
 --- !u!1 &305970128
 GameObject:
   m_ObjectHideFlags: 0
@@ -433,9 +431,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DialogueManager
   falas:
-  - dfjhfdghf
+  - "Eu queria ter continuado viajando pela Europa. Esse pa\xEDs vai quebrar uma
+    hora ou outra!"
   teclaInteracao: 101
-  textManager: {fileID: 811675510}
 --- !u!1 &350901411
 GameObject:
   m_ObjectHideFlags: 0
@@ -1237,9 +1235,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DialogueManager
   falas:
-  - fhcygik.uygijkl
+  - "Voc\xEA pode encontrar a sa\xEDda \xE0 esquerda mais \xE0 frente. Muito obrigado
+    por escolher-nos para viajar!"
   teclaInteracao: 101
-  textManager: {fileID: 811675510}
 --- !u!1 &1681559815
 GameObject:
   m_ObjectHideFlags: 0
@@ -1496,7 +1494,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1762629982
 RectTransform:
   m_ObjectHideFlags: 0

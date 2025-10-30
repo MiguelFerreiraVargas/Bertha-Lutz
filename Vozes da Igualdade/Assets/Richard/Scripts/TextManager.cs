@@ -11,70 +11,97 @@ public class TextManager : MonoBehaviour
     public TextMeshProUGUI dialogueText;
 
     [Header("Typing Settings")]
-    public float typingSpeed = 0.04f; // Tempo entre cada letra
+    public float typingSpeed = 0.04f;
 
     private string[] lines;
     private int currentLine;
-    public bool isTyping { get; private set; }
+    private Coroutine typingCoroutine;
+    private bool isTyping;
+    private bool dialogueActive;
 
-    private void Awake()
+    void Awake()
     {
-        dialogueBox.SetActive(false);
+        if (Instance == null) Instance = this;
+        else Destroy(gameObject);
     }
 
-    private void Update()
+    void Update()
     {
-        if (!dialogueBox.activeSelf) return;
-
-        if (Input.GetKeyDown(KeyCode.E))
+        if (dialogueActive && Input.GetKeyDown(KeyCode.E))
         {
             if (isTyping)
-            {
-                // Pula a digitação
-                StopAllCoroutines();
-                dialogueText.text = lines[currentLine];
-                isTyping = false;
-            }
+                SkipTyping();
             else
-            {
-                currentLine++;
-                if (lines != null && currentLine < lines.Length)
-                {
-                    StartCoroutine(TypeLine(lines[currentLine]));
-                }
-                else
-                {
-                    dialogueBox.SetActive(false);
-                }
-            }
+                NextLine();
         }
     }
 
-    public void StartDialogue(string[] dialogueLines)
+    public void StartDialogue(string[] newLines)
     {
-        if (dialogueLines == null || dialogueLines.Length == 0)
-        {
-            Debug.LogWarning("StartDialogue chamado com array vazio ou nulo!");
-            return;
-        }
+        if (dialogueActive) return;
 
-        lines = dialogueLines;
+        lines = newLines;
         currentLine = 0;
         dialogueBox.SetActive(true);
-        StartCoroutine(TypeLine(lines[currentLine]));
+        dialogueActive = true;
+        ShowLine();
     }
 
-    private IEnumerator TypeLine(string line)
+    void ShowLine()
     {
-        dialogueText.text = "";
-        isTyping = true;
+        if (typingCoroutine != null)
+            StopCoroutine(typingCoroutine);
 
-        foreach (char c in line)
+        typingCoroutine = StartCoroutine(TypeLine(lines[currentLine]));
+    }
+
+    IEnumerator TypeLine(string line)
+    {
+        isTyping = true;
+        dialogueText.text = "";
+
+        foreach (char c in line.ToCharArray())
         {
             dialogueText.text += c;
             yield return new WaitForSeconds(typingSpeed);
         }
 
+        isTyping = false;
+    }
+
+    void SkipTyping()
+    {
+        if (typingCoroutine != null)
+            StopCoroutine(typingCoroutine);
+
+        dialogueText.text = lines[currentLine];
+        isTyping = false;
+    }
+
+    void NextLine()
+    {
+        if (currentLine < lines.Length - 1)
+        {
+            currentLine++;
+            ShowLine();
+        }
+        else
+        {
+            EndDialogue();
+        }
+    }
+
+    void EndDialogue()
+    {
+        dialogueBox.SetActive(false);
+        dialogueActive = false;
+    }
+
+    public void ForceEndDialogue()
+    {
+        StopAllCoroutines();
+        dialogueBox.SetActive(false);
+        dialogueActive = false;
         isTyping = false;
     }
 }
