@@ -9,8 +9,10 @@ public class DialogueManager : MonoBehaviour
 
     void Update()
     {
+
         if (playerInRange && Input.GetKeyDown(teclaInteracao))
         {
+            Debug.Log($"{name}: Chamando StartDialogue()");
             TextManager.Instance.StartDialogue(falas);
         }
     }

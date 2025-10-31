@@ -1,50 +1,23 @@
-
+using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Texting : MonoBehaviour
 {
-    [TextArea(2, 5)]
-    public string[] lines;
+    public string sceneName; // nome da cena a carregar
+    private bool hasLoaded = false; // evita múltiplos loads
 
-    private bool playerInRange = false;
-    private bool dialogueStarted = false;
-
-    void Update()
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        if (playerInRange && Input.GetKeyDown(KeyCode.E))
+        if (other.CompareTag("Porta") && !hasLoaded)
         {
-            if (TextManager.Instance != null)
-            {
-                // Se o diálogo ainda não começou, inicia ele
-                if (!dialogueStarted)
-                {
-                    TextManager.Instance.StartDialogue(lines);
-                    dialogueStarted = true;
-                }
-                // Se já começou, o próprio TextManager vai tratar o avanço das falas
-            }
-        }
-
-        // Quando o diálogo termina (caixa desativada), resetamos
-        if (dialogueStarted && !TextManager.Instance.dialogueBox.activeSelf)
-        {
-            dialogueStarted = false;
+            hasLoaded = true;
+            SceneManager.LoadScene("Richard");
         }
     }
-
-    void OnTriggerEnter2D(Collider2D collision)
+    private IEnumerator LoadAfterDelay(float delay)
     {
-        if (collision.CompareTag("Player"))
-        {
-            playerInRange = true;
-        }
-    }
-
-    void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player"))
-        {
-            playerInRange = false;
-        }
+        yield return new WaitForSeconds(delay);
+        SceneManager.LoadScene("Richard");
     }
 }

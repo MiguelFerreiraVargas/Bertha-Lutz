@@ -21,9 +21,17 @@ public class TextManager : MonoBehaviour
 
     void Awake()
     {
-        if (Instance == null) Instance = this;
-        else Destroy(gameObject);
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject); 
+        }
+        else if (Instance != this)
+        {
+            Destroy(gameObject);
+        }
     }
+
 
     void Update()
     {
@@ -36,9 +44,12 @@ public class TextManager : MonoBehaviour
         }
     }
 
-    public void StartDialogue(string[] newLines)
+    public void  StartDialogue(string[] newLines)
     {
-        if (dialogueActive) return;
+        if (dialogueActive)
+        {
+            ForceEndDialogue(); // encerra o diálogo anterior
+        }
 
         lines = newLines;
         currentLine = 0;
@@ -49,8 +60,8 @@ public class TextManager : MonoBehaviour
 
     void ShowLine()
     {
-        if (typingCoroutine != null)
-            StopCoroutine(typingCoroutine);
+        //if (typingCoroutine != null)
+        //    StopCoroutine(typingCoroutine);
 
         typingCoroutine = StartCoroutine(TypeLine(lines[currentLine]));
     }
@@ -59,6 +70,7 @@ public class TextManager : MonoBehaviour
     {
         isTyping = true;
         dialogueText.text = "";
+        Debug.Log("Digitando com typingSpeed = " + typingSpeed);
 
         foreach (char c in line.ToCharArray())
         {
@@ -71,8 +83,8 @@ public class TextManager : MonoBehaviour
 
     void SkipTyping()
     {
-        if (typingCoroutine != null)
-            StopCoroutine(typingCoroutine);
+        //if (typingCoroutine != null)
+        //    StopCoroutine(typingCoroutine);
 
         dialogueText.text = lines[currentLine];
         isTyping = false;
@@ -99,7 +111,13 @@ public class TextManager : MonoBehaviour
 
     public void ForceEndDialogue()
     {
-        StopAllCoroutines();
+        if (typingCoroutine != null)
+        {
+            StopCoroutine(typingCoroutine);
+            typingCoroutine = null;
+        }
+
+        dialogueText.text = "";
         dialogueBox.SetActive(false);
         dialogueActive = false;
         isTyping = false;
