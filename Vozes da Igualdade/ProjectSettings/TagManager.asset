@@ -6,6 +6,7 @@ TagManager:
   tags:
   - HideSpot
   - NPC
+  - Porta
   layers:
   - Default
   - TransparentFX

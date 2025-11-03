@@ -6,8 +6,7 @@ public class CondicaoDeSaida : MonoBehaviour
     [SerializeField] private ShutTheLights shutTheLights; // referenciado no inspetor
     public int itemIdParaVencer;  // ID do item que abre a porta
 
-    [SerializeField] private GameObject porta;  // porta a ser desativada
-    Texting texting;
+    [SerializeField] private GameObject porta;  // porta a ser desativ;
     private void Start()
     {
         if (porta != null)

@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Texting : MonoBehaviour
+public class Loadscene : MonoBehaviour
 {
     public string sceneName; // nome da cena a carregar
     private bool hasLoaded = false; // evita múltiplos loads
@@ -12,12 +12,12 @@ public class Texting : MonoBehaviour
         if (other.CompareTag("Porta") && !hasLoaded)
         {
             hasLoaded = true;
-            SceneManager.LoadScene("Richard");
+            SceneManager.LoadScene("Pamplona");
         }
     }
     private IEnumerator LoadAfterDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
-        SceneManager.LoadScene("Richard");
+        SceneManager.LoadScene("Pamplona");
     }
 }
