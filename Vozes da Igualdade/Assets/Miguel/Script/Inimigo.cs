@@ -1,61 +1,73 @@
-using UnityEngine;
-using UnityEngine.AI;
+﻿using UnityEngine;
 
-public class EnemyAI2D : MonoBehaviour
+public class EnemySimples : MonoBehaviour
 {
-    public float damageAmount = 20f; // quanto de dano causa
-    public float deathDelay = 0.5f;  // tempo antes de "morrer" ao tocar no player
+    [Header("Configurações do Inimigo")]
+    public float speed = 2f;              // Velocidade de movimento
+    public float danoSanidade = 10f;      // Dano causado ao encostar no player
+    public float distanciaDeDeteccao = 10f; // Distância máxima para detectar o player
 
     private Transform player;
-    private NavMeshAgent agent;
-    private Sanidade playerHealth;
-    private HideInside hideScript;
-    private bool isDead = false;
+    private HideSystem hideSystem;
 
     void Start()
     {
-        // Pega refer�ncia do player
-        GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
-
+        // Acha o player pela tag
+        GameObject playerObj = GameObject.FindWithTag("Player");
         if (playerObj != null)
         {
             player = playerObj.transform;
-            playerHealth = playerObj.GetComponent<Sanidade>();
-            hideScript = playerObj.GetComponent<HideInside>();
+            hideSystem = playerObj.GetComponent<HideSystem>();
         }
-
-        agent = GetComponent<NavMeshAgent>();
-
-        // Ajustes obrigat�rios pra 2D
-        agent.updateRotation = false;
-        agent.updateUpAxis = false;
+        else
+        {
+            Debug.LogWarning("Nenhum objeto com tag 'Player' encontrado na cena!");
+        }
     }
 
+    void Update()
+    {
+        if (player == null) return;
+
+        // Se o player estiver escondido, o inimigo ignora
+        if (hideSystem != null && hideSystem.estaEscondido)
+            return;
+
+        // Calcula distância até o player
+        float distancia = Vector2.Distance(transform.position, player.position);
+
+        // Se estiver perto o suficiente, segue o player
+        if (distancia <= distanciaDeDeteccao)
+        {
+            transform.position = Vector2.MoveTowards(
+                transform.position,
+                player.position,
+                speed * Time.deltaTime
+            );
+        }
+    }
+
+    // Detecta colisão com o player (usar Collider2D com Is Trigger marcado)
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (isDead) return;
-
         if (collision.CompareTag("Player"))
         {
-            if (playerHealth != null)
+            // Se o player estiver escondido, não causa dano
+            HideSystem hide = collision.GetComponent<HideSystem>();
+            if (hide != null && hide.estaEscondido)
+                return;
+
+            // Reduz sanidade
+            BarraDeVida barra = collision.GetComponent<BarraDeVida>();
+            if (barra != null)
             {
-                playerHealth.TakeDamage(damageAmount);
+                barra.sanity -= danoSanidade;
+                barra.sanity = Mathf.Clamp(barra.sanity, 0, barra.sanityMax);
+                Debug.Log("🧠 Player perdeu sanidade! Sanidade atual: " + barra.sanity);
             }
 
-            // Inimigo "morre"
-            StartCoroutine(Die());
+            // Destroi o inimigo após causar dano
+            Destroy(gameObject);
         }
-    }
-
-    private System.Collections.IEnumerator Die()
-    {
-        isDead = true;
-        agent.isStopped = true;
-
-        // Aqui voc� pode colocar anima��o, som, etc.
-        GetComponent<SpriteRenderer>().color = Color.red;
-
-        yield return new WaitForSeconds(deathDelay);
-        Destroy(gameObject);
     }
 }
