@@ -1,31 +1,33 @@
 using UnityEngine;
-using UnityEngine.InputSystem; // Novo sistema de input, mas aqui você ainda usa o antigo (Input.GetAxis)
 
 public class TesteAndando : MonoBehaviour
 {
-    public float moveSpeed = 5f;   // Velocidade do player
-    private Rigidbody2D rb;        // Referência ao Rigidbody2D do player
-    private Vector2 movement;      // Armazena o input do jogador
+    public float moveSpeed = 5f;
+    private Rigidbody2D rb;
+    private Vector2 movement;
+    [HideInInspector] public bool canMove = true; // controla se o player pode se mover
 
     void Start()
     {
-        // Pega o componente Rigidbody2D do player quando o jogo começa
         rb = GetComponent<Rigidbody2D>();
     }
 
     void Update()
     {
-        // Aqui só lemos o input do jogador (não movemos ainda)
-        float x = Input.GetAxisRaw("Horizontal"); // A/D ou setas → -1 a 1
-        float y = Input.GetAxisRaw("Vertical");   // W/S ou setas → -1 a 1
+        if (!canMove)
+        {
+            movement = Vector2.zero;
+            return; // Sai do Update — não lê input
+        }
 
-        movement = new Vector2(x, y).normalized; 
-        // normalized garante que andar na diagonal não fique mais rápido
+        float x = Input.GetAxisRaw("Horizontal");
+        float y = Input.GetAxisRaw("Vertical");
+
+        movement = new Vector2(x, y).normalized;
     }
 
     void FixedUpdate()
     {
-        // Movimento aplicado no Rigidbody2D (ciclo da física)
         rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime);
     }
 }
