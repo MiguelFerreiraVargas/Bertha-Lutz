@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class Loadscene : MonoBehaviour
 {
-    public string sceneName = "TaxiScene"; // Nome da cena a carregar
+    public string sceneName = "Pamplona"; // Nome da cena a carregar
     private bool hasLoaded = false; // Evita múltiplos loads
 
     private void OnTriggerEnter2D(Collider2D other)
