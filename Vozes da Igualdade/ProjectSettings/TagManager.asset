@@ -7,8 +7,6 @@ TagManager:
   - HideSpot
   - NPC
   - Porta
-  - Enemie
-  - Esconderijo
   layers:
   - Default
   - TransparentFX
