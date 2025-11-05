@@ -18,7 +18,7 @@ public class TextManager : MonoBehaviour
     private Coroutine typingCoroutine;
     private bool isTyping;
     private bool dialogueActive;
-
+  
     void Awake()
     {
         if (Instance == null)
