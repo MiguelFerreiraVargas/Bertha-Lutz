@@ -4,60 +4,63 @@ public class Objetos : MonoBehaviour
 {
     public KeyCode teclaInteracao = KeyCode.E;
     private bool playerInRange = false;
-    private bool playerInRangeI = false;
-    [SerializeField] private GameObject poster;
 
-    private TesteAndando playerMovement; // refer�ncia ao script de movimento
+    [SerializeField] private GameObject poster;
+    private TesteAndando playerMovement;
 
     public GameObject pressEE; // UI "Pressione E"
 
     void Start()
     {
-        // Garantir que o "Pressione E" comece desativado
+        // Garante que o "Pressione E" comece desativado
         if (pressEE != null)
             pressEE.SetActive(false);
     }
 
     void Update()
     {
-        // Mostra/esconde o "Pressione E" dependendo se o jogador est� perto
+        // Mostra/esconde o "Pressione E" dependendo se o jogador está perto e o poster não está ativo
         if (pressEE != null)
             pressEE.SetActive(playerInRange && !poster.activeSelf);
 
-        // Intera��o ao apertar E
+        // Interação: apertar E quando o jogador está perto
         if (playerInRange && Input.GetKeyDown(teclaInteracao))
-            if (playerInRangeI && Input.GetKeyDown(teclaInteracao))
-            {
-                // Alterna o estado do poster
-                bool novoEstado = !poster.activeSelf;
-            }
+        {
+            bool novoEstado = !poster.activeSelf;
+            poster.SetActive(novoEstado);
+
+            // Impede movimento do player quando o poster estiver ativo
+            if (playerMovement != null)
+                playerMovement.canMove = !novoEstado;
+
+            // Esconde o "Pressione E" se o poster foi ativado
+            if (pressEE != null && novoEstado)
+                pressEE.SetActive(false);
+        }
     }
-     void OnTriggerEnter2D(Collider2D other)
+
+    void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
         {
             playerInRange = true;
-            playerInRangeI = true;
             playerMovement = other.GetComponent<TesteAndando>();
 
-            // Mostra o "Pressione E"
             if (pressEE != null)
                 pressEE.SetActive(true);
         }
     }
-    private void OnTriggerExit2D(Collider2D other)
+
+    void OnTriggerExit2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
         {
             playerInRange = false;
-            playerInRangeI = false;
             poster.SetActive(false);
 
-            // Garante que o player pode voltar a se mover ao sair da �rea
             if (playerMovement != null)
                 playerMovement.canMove = true;
 
-            // Esconde o "Pressione E"
             if (pressEE != null)
                 pressEE.SetActive(false);
         }
