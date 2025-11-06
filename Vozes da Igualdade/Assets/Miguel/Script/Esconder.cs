@@ -3,7 +3,7 @@ using UnityEngine;
 public class HideSystem : MonoBehaviour
 {
     [Header("Configurações de Esconderijo")]
-    public KeyCode teclaEsconder = KeyCode.E; // tecla para entrar/sair do esconderijo
+    public KeyCode teclaEsconder = KeyCode.Space; // tecla para entrar/sair do esconderijo
     public bool estaEscondido = false;        // indica se o player está escondido
     private Collider2D esconderijoAtual;      // referência ao esconderijo mais próximo
     private SpriteRenderer spriteRenderer;    // para esconder o visual do player
@@ -27,7 +27,7 @@ public class HideSystem : MonoBehaviour
     void EntrarNoEsconderijo()
     {
         estaEscondido = true;
-        spriteRenderer.enabled = false; // "some" visualmente
+        spriteRenderer.enabled = false;
         Debug.Log("Player entrou no esconderijo!");
     }
 
@@ -43,7 +43,7 @@ public class HideSystem : MonoBehaviour
         if (collision.CompareTag("Esconderijo"))
         {
             esconderijoAtual = collision;
-            Debug.Log("Pode se esconder aqui. Pressione E.");
+            Debug.Log("Pode se esconder aqui. Pressione Backspace.");
         }
     }
 
