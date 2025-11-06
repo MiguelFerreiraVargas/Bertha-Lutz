@@ -19,12 +19,15 @@ public class TextManager : MonoBehaviour
     private bool isTyping;
     private bool dialogueActive;
 
+    // Permite que outros scripts vejam se há um diálogo ativo
+    public bool DialogueActive => dialogueActive;
+
     void Awake()
     {
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject); 
+            DontDestroyOnLoad(gameObject);
         }
         else if (Instance != this)
         {
@@ -32,23 +35,11 @@ public class TextManager : MonoBehaviour
         }
     }
 
-
-    void Update()
-    {
-        if (dialogueActive && Input.GetKeyDown(KeyCode.E))
-        {
-            if (isTyping)
-                SkipTyping();
-            else
-                NextLine();
-        }
-    }
-
-    public void  StartDialogue(string[] newLines)
+    public void StartDialogue(string[] newLines)
     {
         if (dialogueActive)
         {
-            ForceEndDialogue(); // encerra o diálogo anterior
+            ForceEndDialogue(); // encerra diálogo anterior, se houver
         }
 
         lines = newLines;
@@ -60,8 +51,8 @@ public class TextManager : MonoBehaviour
 
     void ShowLine()
     {
-        //if (typingCoroutine != null)
-        //    StopCoroutine(typingCoroutine);
+        if (typingCoroutine != null)
+            StopCoroutine(typingCoroutine);
 
         typingCoroutine = StartCoroutine(TypeLine(lines[currentLine]));
     }
@@ -70,9 +61,8 @@ public class TextManager : MonoBehaviour
     {
         isTyping = true;
         dialogueText.text = "";
-        Debug.Log("Digitando com typingSpeed = " + typingSpeed);
 
-        foreach (char c in line.ToCharArray())
+        foreach (char c in line)
         {
             dialogueText.text += c;
             yield return new WaitForSeconds(typingSpeed);
@@ -83,23 +73,33 @@ public class TextManager : MonoBehaviour
 
     void SkipTyping()
     {
-        //if (typingCoroutine != null)
-        //    StopCoroutine(typingCoroutine);
+        if (typingCoroutine != null)
+            StopCoroutine(typingCoroutine);
 
         dialogueText.text = lines[currentLine];
         isTyping = false;
     }
 
-    void NextLine()
+    public bool NextLine()
     {
-        if (currentLine < lines.Length - 1)
+        // Se ainda está digitando, mostra tudo de uma vez
+        if (isTyping)
         {
-            currentLine++;
+            SkipTyping();
+            return false;
+        }
+
+        // Avança para próxima linha
+        currentLine++;
+        if (currentLine < lines.Length)
+        {
             ShowLine();
+            return false;
         }
         else
         {
             EndDialogue();
+            return true; // diálogo acabou
         }
     }
 
@@ -111,6 +111,8 @@ public class TextManager : MonoBehaviour
 
     public void ForceEndDialogue()
     {
+        if (!dialogueActive) return;
+
         if (typingCoroutine != null)
         {
             StopCoroutine(typingCoroutine);

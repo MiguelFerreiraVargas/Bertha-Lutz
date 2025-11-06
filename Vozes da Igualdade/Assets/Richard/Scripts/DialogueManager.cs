@@ -10,34 +10,51 @@ public class DialogueManager : MonoBehaviour
     private bool playerInRange = false;
     private bool dialogueAtivo = false;
 
-    public GameObject pressE;
-
-    private TesteAndando playerMove;
+    public GameObject pressE; // ícone "Pressione E"
+    private TesteAndando playerMove; // referência ao script de movimento
 
     void Start()
     {
-        // Garantir que o "Pressione E" comece desativado
         if (pressE != null)
             pressE.SetActive(false);
     }
 
     void Update()
     {
-        // Interação com NPC
-        if (playerInRange && Input.GetKeyDown(teclaInteracao))
+        if (!playerInRange) return;
+
+        if (Input.GetKeyDown(teclaInteracao))
         {
             if (!dialogueAtivo)
+            {
                 StartDialogue();
+            }
             else
-                EndDialogue();
+            {
+                // avança o diálogo ou encerra se terminou
+                if (TextManager.Instance != null)
+                {
+                    bool acabou = TextManager.Instance.NextLine();
+                    if (acabou)
+                        EndDialogue();
+                }
+            }
         }
     }
 
     private void StartDialogue()
     {
+        if (TextManager.Instance == null)
+            return;
+
+        // Evita iniciar outro diálogo se já há um ativo
+        if (TextManager.Instance.DialogueActive)
+            return;
+
         Debug.Log($"{name}: Iniciando diálogo");
-        TextManager.Instance.StartDialogue(falas);
         dialogueAtivo = true;
+
+        TextManager.Instance.StartDialogue(falas);
 
         // Impede o movimento do jogador
         if (playerMove != null)
@@ -46,11 +63,14 @@ public class DialogueManager : MonoBehaviour
         UpdatePressE();
     }
 
+
     private void EndDialogue()
     {
         Debug.Log($"{name}: Finalizando diálogo");
-        TextManager.Instance.ForceEndDialogue();
         dialogueAtivo = false;
+
+        if (TextManager.Instance != null)
+            TextManager.Instance.ForceEndDialogue();
 
         // Libera o movimento do jogador
         if (playerMove != null)
@@ -71,7 +91,7 @@ public class DialogueManager : MonoBehaviour
         {
             playerInRange = true;
             playerMove = other.GetComponent<TesteAndando>();
-            UpdatePressE(); // Atualiza o "Pressione E" quando o player entra
+            UpdatePressE();
         }
     }
 
@@ -80,14 +100,8 @@ public class DialogueManager : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             playerInRange = false;
-
-            // Força o fim do diálogo se o player sair do range
             EndDialogue();
-
-            // Esconde o "Pressione E"
             UpdatePressE();
-
-            // Remove referência do player
             playerMove = null;
         }
     }
