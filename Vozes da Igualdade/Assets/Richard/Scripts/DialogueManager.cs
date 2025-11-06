@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement; 
 
 public class DialogueManager : MonoBehaviour
 {
@@ -11,8 +12,7 @@ public class DialogueManager : MonoBehaviour
     private bool dialogueAtivo = false;
 
     public GameObject pressE; // ícone "Pressione E"
-    private TesteAndando playerMove; // referência ao script de movimento
-
+    private TesteAndando playerMove; // referência ao script de movimen
     void Start()
     {
         if (pressE != null)
@@ -29,6 +29,7 @@ public class DialogueManager : MonoBehaviour
             {
                 StartDialogue();
             }
+
             else
             {
                 // avança o diálogo ou encerra se terminou
