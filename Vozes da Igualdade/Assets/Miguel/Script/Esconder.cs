@@ -4,13 +4,15 @@ public class HideSystem : MonoBehaviour
 {
     [Header("Configurações de Esconderijo")]
     public KeyCode teclaEsconder = KeyCode.Space; // tecla para entrar/sair do esconderijo
-    public bool estaEscondido = false;        // indica se o player está escondido
-    private Collider2D esconderijoAtual;      // referência ao esconderijo mais próximo
-    private SpriteRenderer spriteRenderer;    // para esconder o visual do player
+    public bool estaEscondido = false;            // indica se o player está escondido
+    private Collider2D esconderijoAtual;          // referência ao esconderijo mais próximo
+    private SpriteRenderer spriteRenderer;        // para esconder o visual do player
+    private TesteAndando movimento;               // referência ao script de movimento do player
 
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+        movimento = GetComponent<TesteAndando>(); // pega o script de movimento
     }
 
     void Update()
@@ -28,6 +30,10 @@ public class HideSystem : MonoBehaviour
     {
         estaEscondido = true;
         spriteRenderer.enabled = false;
+
+        if (movimento != null)
+            movimento.canMove = false; // trava movimento
+
         Debug.Log("Player entrou no esconderijo!");
     }
 
@@ -35,6 +41,10 @@ public class HideSystem : MonoBehaviour
     {
         estaEscondido = false;
         spriteRenderer.enabled = true;
+
+        if (movimento != null)
+            movimento.canMove = true; // libera movimento
+
         Debug.Log("Player saiu do esconderijo!");
     }
 
@@ -43,7 +53,7 @@ public class HideSystem : MonoBehaviour
         if (collision.CompareTag("Esconderijo"))
         {
             esconderijoAtual = collision;
-            Debug.Log("Pode se esconder aqui. Pressione Backspace.");
+            Debug.Log("Pode se esconder aqui. Pressione Espaço.");
         }
     }
 
