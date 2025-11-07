@@ -3,16 +3,22 @@
 public class EnemySimples : MonoBehaviour
 {
     [Header("Configurações do Inimigo")]
-    public float speed = 2f;              // Velocidade de movimento
-    public float danoSanidade = 10f;      // Dano causado ao encostar no player
-    public float distanciaDeDeteccao = 10f; // Distância máxima para detectar o player
+    public float speedPatrulha = 2f;          // Velocidade enquanto patrulha
+    public float speedPerseguindo = 3.5f;     // Velocidade enquanto persegue
+    public float danoSanidade = 10f;          // Dano causado ao encostar no player
+    public float distanciaDeDeteccao = 8f;    // Distância máxima para detectar o player
+
+    [Header("Pontos de Patrulha")]
+    public Transform[] pontosDePatrulha;      // Lista de pontos (adicione no Inspector)
+    private int pontoAtual = 0;
 
     private Transform player;
     private HideSystem hideSystem;
+    private bool perseguindo = false;
 
     void Start()
     {
-        // Acha o player pela tag
+        // Acha o player
         GameObject playerObj = GameObject.FindWithTag("Player");
         if (playerObj != null)
         {
@@ -21,7 +27,7 @@ public class EnemySimples : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("Nenhum objeto com tag 'Player' encontrado na cena!");
+            Debug.LogWarning("Nenhum objeto com tag 'Player' encontrado!");
         }
     }
 
@@ -29,45 +35,76 @@ public class EnemySimples : MonoBehaviour
     {
         if (player == null) return;
 
-        // Se o player estiver escondido, o inimigo ignora
+        // Se o player estiver escondido, para de perseguir e volta a patrulhar
         if (hideSystem != null && hideSystem.estaEscondido)
+        {
+            perseguindo = false;
+            Patrulhar();
             return;
+        }
 
         // Calcula distância até o player
         float distancia = Vector2.Distance(transform.position, player.position);
 
-        // Se estiver perto o suficiente, segue o player
         if (distancia <= distanciaDeDeteccao)
         {
-            transform.position = Vector2.MoveTowards(
-                transform.position,
-                player.position,
-                speed * Time.deltaTime
-            );
+            perseguindo = true;
+        }
+        else if (perseguindo && distancia > distanciaDeDeteccao * 1.5f)
+        {
+            // Se o player fugir muito, volta a patrulhar
+            perseguindo = false;
+        }
+
+        if (perseguindo)
+            Perseguir();
+        else
+            Patrulhar();
+    }
+
+    void Patrulhar()
+    {
+        if (pontosDePatrulha.Length == 0) return;
+
+        Transform alvo = pontosDePatrulha[pontoAtual];
+        transform.position = Vector2.MoveTowards(
+            transform.position,
+            alvo.position,
+            speedPatrulha * Time.deltaTime
+        );
+
+        // Quando chega no ponto atual, vai para o próximo
+        if (Vector2.Distance(transform.position, alvo.position) < 0.1f)
+        {
+            pontoAtual = (pontoAtual + 1) % pontosDePatrulha.Length;
         }
     }
 
-    // Detecta colisão com o player (usar Collider2D com Is Trigger marcado)
+    void Perseguir()
+    {
+        transform.position = Vector2.MoveTowards(
+            transform.position,
+            player.position,
+            speedPerseguindo * Time.deltaTime
+        );
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (!collision.CompareTag("Player")) return;
+
+        HideSystem hide = collision.GetComponent<HideSystem>();
+        if (hide != null && hide.estaEscondido)
+            return;
+
+        BarraDeVida barra = collision.GetComponent<BarraDeVida>();
+        if (barra != null)
         {
-            // Se o player estiver escondido, não causa dano
-            HideSystem hide = collision.GetComponent<HideSystem>();
-            if (hide != null && hide.estaEscondido)
-                return;
-
-            // Reduz sanidade
-            BarraDeVida barra = collision.GetComponent<BarraDeVida>();
-            if (barra != null)
-            {
-                barra.sanity -= danoSanidade;
-                barra.sanity = Mathf.Clamp(barra.sanity, 0, barra.sanityMax);
-                Debug.Log("🧠 Player perdeu sanidade! Sanidade atual: " + barra.sanity);
-            }
-
-            // Destroi o inimigo após causar dano
-            Destroy(gameObject);
+            barra.sanity -= danoSanidade;
+            barra.sanity = Mathf.Clamp(barra.sanity, 0, barra.sanityMax);
+            Debug.Log(" Player perdeu sanidade! Sanidade atual: " + barra.sanity);
         }
+
+        Destroy(gameObject);
     }
 }
