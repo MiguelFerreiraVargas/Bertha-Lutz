@@ -3,49 +3,40 @@ using UnityEngine;
 
 public class TimerScript : MonoBehaviour
 {
-    [SerializeField] TMP_Text firstNote;
-    [SerializeField] TMP_Text timerText;
 
-    float timerRemaining = 60f;
-    bool timerIsRunning = true;
+    public Animator playerAnimator;
+
+    private bool wasWalking = false;
+
+    void Start()
+    {
+        if (playerAnimator == null)
+            playerAnimator = GetComponentInChildren<Animator>();
+    }
 
     void Update()
     {
-        if (timerIsRunning)
-        {
-            if (timerRemaining > 0)
-            {
-                timerRemaining -= Time.deltaTime;
-                UpdateTimerDisplay(timerRemaining);
-                ShowNotes(); // Verifica se a nota deve aparecer
-            }
-            else
-            {
-                timerRemaining = 0;
-                timerIsRunning = false;
-                UpdateTimerDisplay(0);
-                firstNote.gameObject.SetActive(false); // desativa ao fim
-            }
-        }
-    }
+        // detecta movimento
+        bool isWalking = Input.GetKey(KeyCode.W) ||
+                         Input.GetKey(KeyCode.A) ||
+                         Input.GetKey(KeyCode.S) ||
+                         Input.GetKey(KeyCode.D);
 
-    void UpdateTimerDisplay(float timeToDisplay)
-    {
-        int minutes = Mathf.FloorToInt(timeToDisplay / 60);
-        int seconds = Mathf.FloorToInt(timeToDisplay % 60);
-        timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
-    }
+        // mostra no console pra testar
+        Debug.Log("isWalking: " + isWalking);
 
-    void ShowNotes()
-    {
-        // Mostra a nota entre 45s e 35s
-        if (timerRemaining < 45 && timerRemaining > 35)
+        // só troca quando o estado muda (evita reiniciar animação todo frame)
+        if (isWalking && !wasWalking)
         {
-            firstNote.gameObject.SetActive(true);
+            Debug.Log(">> Tocando WALKING");
+            playerAnimator.Play("Walking2", 0, 0f);
         }
-        else
+        else if (!isWalking && wasWalking)
         {
-            firstNote.gameObject.SetActive(false);
+            Debug.Log(">> Tocando IDLE");
+            playerAnimator.Play("Idle2", 0, 0f);
         }
+
+        wasWalking = isWalking;
     }
 }
