@@ -1,7 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.Progress;
-
 public class Inventoryy : MonoBehaviour
 {
     public int maxSlots = 6;            
