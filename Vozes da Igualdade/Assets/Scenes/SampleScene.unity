@@ -1987,7 +1987,7 @@ Grid:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 363160175}
   m_Enabled: 1
-  m_CellSize: {x: 1.5, y: 1.5, z: 0}
+  m_CellSize: {x: 1, y: 1, z: 0}
   m_CellGap: {x: 0, y: 0, z: 0}
   m_CellLayout: 0
   m_CellSwizzle: 0
@@ -9237,7 +9237,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 055a70357647b6d4ead3a140abc9d33b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventoryy: {fileID: 0}
+  inventoryy: {fileID: 1172280521}
   slotPrefab: {fileID: 111559899958577108, guid: 9c4202aa05a6d774e9c68a284a64c82e, type: 3}
   slotsParent: {fileID: 43735240}
   inventoryPanel: {fileID: 93841501}
