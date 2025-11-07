@@ -7,6 +7,6 @@ public class StartScreen : MonoBehaviour
     public void StartGame()
     {
         // Carrega a cena do jogo (certifique-se de que a cena "Game" está adicionada nas configurações do build)
-        SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene("Richard");
     }
 }

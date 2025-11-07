@@ -1,11 +1,18 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TesteAndando : MonoBehaviour
 {
-    public float moveSpeed = 5f;
+    public float speed = 5f;
     private Rigidbody2D rb;
     private Vector2 movement;
-    [HideInInspector] public bool canMove = true; // controla se o player pode se mover
+
+    [Header("Som de Passos")]
+    public AudioSource audioPassos;
+    public float intervaloPassos = 0.4f;
+    private float passoTimer = 0f;
+
+    public bool canMove = true;
 
     void Start()
     {
@@ -14,20 +21,28 @@ public class TesteAndando : MonoBehaviour
 
     void Update()
     {
-        if (!canMove)
-        {
-            movement = Vector2.zero;
-            return; // Sai do Update — não lê input
-        }
+        if (!canMove) return;
 
-        float x = Input.GetAxisRaw("Horizontal");
-        float y = Input.GetAxisRaw("Vertical");
-
-        movement = new Vector2(x, y).normalized;
+        movement.x = Input.GetAxisRaw("Horizontal");
+        movement.y = Input.GetAxisRaw("Vertical");
     }
 
     void FixedUpdate()
     {
-        rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime);
+        if (!canMove) return;
+
+        rb.MovePosition(rb.position + movement.normalized * speed * Time.fixedDeltaTime);
+
+        // 🔊 Som de passos
+        if (movement.magnitude > 0.1f)
+        {
+            passoTimer -= Time.deltaTime;
+            if (passoTimer <= 0f)
+            {
+                if (!audioPassos.isPlaying)
+                    audioPassos.Play();
+                passoTimer = intervaloPassos;
+            }
+        }
     }
 }
