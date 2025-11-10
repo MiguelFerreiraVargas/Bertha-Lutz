@@ -66,11 +66,14 @@ TagManager:
   - name: New Layer 8
     uniqueID: 2734753771
     locked: 0
-  - name: Player
-    uniqueID: 3725175287
-    locked: 0
   - name: ElementosDacena
     uniqueID: 2342150361
+    locked: 0
+  - name: Eletrodomesticos
+    uniqueID: 1460608477
+    locked: 0
+  - name: Player
+    uniqueID: 1017007857
     locked: 0
   m_RenderingLayers:
   - Default
