@@ -1,94 +1,40 @@
-using UnityEngine;
+Ôªøusing UnityEngine;
 
 public class NPCSdialogue : MonoBehaviour
 {
+    [Header("Refer√™ncias")]
+    public GameObject puzzleImage; // painel ou imagem do puzzle
+    public DialogueManager dialogueManager; // o NPC que dispara o di√°logo
 
-    [TextArea(3, 6)]
-    public string[] falas;
-
-    public KeyCode teclaInteracao = KeyCode.E;
-    private bool playerInRange = false;
-    private bool dialogueAtivo = false;
-
-    public GameObject pressE;
-
-    private TesteAndando playerMove;
+    private bool puzzleAtivado = false;
 
     void Start()
     {
-        // Garantir que o "Pressione E" comece desativado
-        if (pressE != null)
-            pressE.SetActive(false);
+        if (puzzleImage != null)
+            puzzleImage.SetActive(false);
     }
 
     void Update()
     {
-        // InteraÁ„o com NPC
-        if (playerInRange && Input.GetKeyDown(teclaInteracao))
+        // S√≥ ativa o puzzle se o di√°logo tiver terminado
+        if (!puzzleAtivado && dialogueManager != null)
         {
-            if (!dialogueAtivo)
-                StartDialogue();
-            else
-                EndDialogue();
+            // Verifica se o di√°logo acabou (ou seja, n√£o est√° ativo)
+            if (!TextManager.Instance.DialogueActive && dialogueManager.gameObject.activeInHierarchy)
+            {
+                // Ativa o puzzle uma √∫nica vez
+                AtivarPuzzle();
+            }
         }
     }
 
-    private void StartDialogue()
+    void AtivarPuzzle()
     {
-        Debug.Log($"{name}: Iniciando di·logo");
-        TextManager.Instance.StartDialogue(falas);
-        dialogueAtivo = true;
+        puzzleAtivado = true;
 
-        // Impede o movimento do jogador
-        if (playerMove != null)
-            playerMove.canMove = false;
+        if (puzzleImage != null)
+            puzzleImage.SetActive(true);
 
-        UpdatePressE();
-    }
-
-    private void EndDialogue()
-    {
-        Debug.Log($"{name}: Finalizando di·logo");
-        TextManager.Instance.ForceEndDialogue();
-        dialogueAtivo = false;
-
-        // Libera o movimento do jogador
-        if (playerMove != null)
-            playerMove.canMove = true;
-
-        UpdatePressE();
-    }
-
-    private void UpdatePressE()
-    {
-        if (pressE != null)
-            pressE.SetActive(playerInRange && !dialogueAtivo);
-    }
-
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            playerInRange = true;
-            playerMove = other.GetComponent<TesteAndando>();
-            UpdatePressE(); // Atualiza o "Pressione E" quando o player entra
-        }
-    }
-
-    void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            playerInRange = false;
-
-            // ForÁa o fim do di·logo se o player sair do range
-            EndDialogue();
-
-            // Esconde o "Pressione E"
-            UpdatePressE();
-
-            // Remove referÍncia do player
-            playerMove = null;
-        }
+        Debug.Log("üß© Puzzle ativado ap√≥s o di√°logo!");
     }
 }

@@ -21,17 +21,16 @@ public class Animation : MonoBehaviour
                          Input.GetKey(KeyCode.D);
 
         // mostra no console pra testar
-        Debug.Log("isWalking: " + isWalking);
-
+       
         // só troca quando o estado muda (evita reiniciar animação todo frame)
         if (isWalking && !wasWalking)
         {
-            Debug.Log(">> Tocando WALKING");
+         
             playerAnimator.Play("Walkinfforreal", 0, 0f);
         }
         else if (!isWalking && wasWalking)
         {
-            Debug.Log(">> Tocando IDLE");
+            
             playerAnimator.Play("Idle", 0, 0f);
         }
 

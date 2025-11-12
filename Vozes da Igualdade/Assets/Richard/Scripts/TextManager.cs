@@ -1,4 +1,4 @@
-using TMPro;
+Ôªøusing TMPro;
 using UnityEngine;
 using System.Collections;
 
@@ -19,7 +19,7 @@ public class TextManager : MonoBehaviour
     private bool isTyping;
     private bool dialogueActive;
 
-    // Permite que outros scripts vejam se h· um di·logo ativo
+    // Permite que outros scripts vejam se h√° um di√°logo ativo
     public bool DialogueActive => dialogueActive;
 
     void Awake()
@@ -39,7 +39,7 @@ public class TextManager : MonoBehaviour
     {
         if (dialogueActive)
         {
-            ForceEndDialogue(); // encerra di·logo anterior, se houver
+            ForceEndDialogue(); // encerra di√°logo anterior, se houver
         }
 
         lines = newLines;
@@ -82,14 +82,14 @@ public class TextManager : MonoBehaviour
 
     public bool NextLine()
     {
-        // Se ainda est· digitando, mostra tudo de uma vez
+        // Se ainda est√° digitando, mostra tudo de uma vez
         if (isTyping)
         {
             SkipTyping();
             return false;
         }
 
-        // AvanÁa para prÛxima linha
+        // Avan√ßa para pr√≥xima linha
         currentLine++;
         if (currentLine < lines.Length)
         {
@@ -99,7 +99,7 @@ public class TextManager : MonoBehaviour
         else
         {
             EndDialogue();
-            return true; // di·logo acabou
+            return true; // di√°logo acabou
         }
     }
 

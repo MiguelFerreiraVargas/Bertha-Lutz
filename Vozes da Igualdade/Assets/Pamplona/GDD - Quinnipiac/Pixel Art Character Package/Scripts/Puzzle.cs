@@ -14,7 +14,7 @@ public class PuzzleLuzes : MonoBehaviour
 
     void Start()
     {
-        luzPrincipal.enabled = false; // começa apagada
+    //    luzPrincipal.enabled = false; // começa apagada
     }
 
     public void PressionarBotao(int numero)

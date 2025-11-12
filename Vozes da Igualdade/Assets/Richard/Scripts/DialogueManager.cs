@@ -1,6 +1,6 @@
-using UnityEngine;
+Ôªøusing UnityEngine;
 using TMPro;
-using UnityEngine.SceneManagement; 
+using UnityEngine.SceneManagement;
 
 public class DialogueManager : MonoBehaviour
 {
@@ -11,8 +11,9 @@ public class DialogueManager : MonoBehaviour
     private bool playerInRange = false;
     private bool dialogueAtivo = false;
 
-    public GameObject pressE; // Ìcone "Pressione E"
-    private TesteAndando playerMove; // referÍncia ao script de movimen
+    public GameObject pressE; // √≠cone "Pressione E"
+    private TesteAndando playerMove; // refer√™ncia ao script de movimento
+
     void Start()
     {
         if (pressE != null)
@@ -21,7 +22,8 @@ public class DialogueManager : MonoBehaviour
 
     void Update()
     {
-        if (!playerInRange) return;
+        if (!playerInRange)
+            return;
 
         if (Input.GetKeyDown(teclaInteracao))
         {
@@ -29,10 +31,9 @@ public class DialogueManager : MonoBehaviour
             {
                 StartDialogue();
             }
-
             else
             {
-                // avanÁa o di·logo ou encerra se terminou
+                // avan√ßa o di√°logo ou encerra se terminou
                 if (TextManager.Instance != null)
                 {
                     bool acabou = TextManager.Instance.NextLine();
@@ -48,11 +49,11 @@ public class DialogueManager : MonoBehaviour
         if (TextManager.Instance == null)
             return;
 
-        // Evita iniciar outro di·logo se j· h· um ativo
+        // Evita iniciar outro di√°logo se j√° h√° um ativo
         if (TextManager.Instance.DialogueActive)
             return;
 
-        Debug.Log($"{name}: Iniciando di·logo");
+        Debug.Log($"{name}: Iniciando di√°logo");
         dialogueAtivo = true;
 
         TextManager.Instance.StartDialogue(falas);
@@ -64,10 +65,9 @@ public class DialogueManager : MonoBehaviour
         UpdatePressE();
     }
 
-
     private void EndDialogue()
     {
-        Debug.Log($"{name}: Finalizando di·logo");
+        Debug.Log($"{name}: Finalizando di√°logo");
         dialogueAtivo = false;
 
         if (TextManager.Instance != null)
@@ -93,6 +93,11 @@ public class DialogueManager : MonoBehaviour
             playerInRange = true;
             playerMove = other.GetComponent<TesteAndando>();
             UpdatePressE();
+        }
+
+        if (other.CompareTag("Falas"))
+        {
+            playerInRange = true;
         }
     }
 
