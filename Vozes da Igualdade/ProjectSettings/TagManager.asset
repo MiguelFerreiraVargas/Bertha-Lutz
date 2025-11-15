@@ -79,5 +79,8 @@ TagManager:
   - name: canva
     uniqueID: 1148455977
     locked: 0
+  - name: canvasPuzzle
+    uniqueID: 1367444169
+    locked: 0
   m_RenderingLayers:
   - Default

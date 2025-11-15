@@ -3,7 +3,7 @@
 public class NPCSdialogue : MonoBehaviour
 {
     [Header("Referências")]
-    public GameObject puzzleImage;
+    public GameObject puzzleImage;          // Contém o PuzzleManager
     public DialogueManager dialogueManager;
 
     private bool puzzleAtivado = false;
@@ -16,12 +16,10 @@ public class NPCSdialogue : MonoBehaviour
         if (puzzleImage != null)
             puzzleImage.SetActive(false);
 
-        // Pega o player no início (melhor prática)
+        // Pega o player no início
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         if (player != null)
-        {
             testeAndando = player.GetComponent<TesteAndando>();
-        }
     }
 
     void Update()
@@ -29,34 +27,24 @@ public class NPCSdialogue : MonoBehaviour
         if (dialogueManager == null || puzzleAtivado)
             return;
 
-        // Detecta se o diálogo começou
+        // Detecta início do diálogo
         if (!dialogoIniciado && TextManager.Instance.DialogueActive)
-        {
             dialogoIniciado = true;
-        }
 
-        // Se já começou e agora terminou → ativa o puzzle
+        // Detecta fim do diálogo
         if (dialogoIniciado && !TextManager.Instance.DialogueActive)
-        {
             AtivarPuzzle();
-        }
     }
 
     void AtivarPuzzle()
     {
         puzzleAtivado = true;
 
-        // trava o movimento
+        // Trava movimento do player
         if (testeAndando != null)
-        {
             testeAndando.canMove = false;
-            Debug.Log("Movimento bloqueado!");
-        }
-        else
-        {
-            Debug.LogWarning("⚠ TesteAndando não encontrado no Player!");
-        }
 
+        // Ativa puzzle
         if (puzzleImage != null)
             puzzleImage.SetActive(true);
 
