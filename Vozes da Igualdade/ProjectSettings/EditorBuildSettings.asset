@@ -6,22 +6,22 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Menu.unity
+    path: Assets/Richard/Scenes/Menu.unity
     guid: 56d14f56798e23c46a58d097ab383ebd
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
+    path: Assets/Richard/Scenes/SampleScene.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
   - enabled: 1
-    path: Assets/Scenes/Richard.unity
+    path: Assets/Richard/Scenes/Richard.unity
     guid: 6f87cbbf71e7e814dae3c7e753b23a33
   - enabled: 1
-    path: Assets/Scenes/Pamplona.unity
+    path: Assets/Richard/Scenes/Pamplona.unity
     guid: 888a92cb0358fb04b94901f905364ea0
   - enabled: 1
-    path: Assets/Scenes/Miguel.unity
+    path: Assets/Richard/Scenes/Miguel.unity
     guid: 50ccc2ea357711343bbdbdbbb17172c4
   - enabled: 1
-    path: Assets/Scenes/TaxiTeleport.unity
+    path: Assets/Richard/Scenes/TaxiTeleport.unity
     guid: 8ab24b8aa4ae9444f9e1a2e867ab0ea6
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
