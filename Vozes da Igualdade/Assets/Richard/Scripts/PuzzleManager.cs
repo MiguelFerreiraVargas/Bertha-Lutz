@@ -9,11 +9,18 @@ public class PuzzleManager : MonoBehaviour
     public Sprite[] images;
     public GameObject itemReward;
 
+    // Evento para quando o puzzle é completado
+    public System.Action OnPuzzleCompleted;
+
     private List<PuzzlePieceDrag> pieces = new List<PuzzlePieceDrag>();
     private bool puzzleFinished = false;
 
     void Start()
     {
+        // Esconde a recompensa no início
+        if (itemReward != null)
+            itemReward.SetActive(false);
+
         if (images.Length != 16)
         {
             Debug.LogError($"Precisa de 16 imagens, mas tem {images.Length}!");
@@ -58,7 +65,6 @@ public class PuzzleManager : MonoBehaviour
 
     void ShufflePieces()
     {
-        // Método mais confiável de shuffle
         for (int i = 0; i < pieces.Count; i++)
         {
             int randomIndex = Random.Range(0, pieces.Count);
@@ -82,7 +88,6 @@ public class PuzzleManager : MonoBehaviour
     {
         for (int i = 0; i < pieces.Count; i++)
         {
-            // Verifica se cada peça está na posição correta
             if (pieces[i].transform.GetSiblingIndex() != pieces[i].correctIndex)
             {
                 return false;
@@ -106,9 +111,7 @@ public class PuzzleManager : MonoBehaviour
         if (puzzleArea != null)
             puzzleArea.gameObject.SetActive(false);
 
-        // Aqui você pode adicionar:
-        // - Liberar movimento do player
-        // - Mostrar mensagem de sucesso
-        // - Transição para próxima fase
+        // Dispara o evento
+        OnPuzzleCompleted?.Invoke();
     }
 }

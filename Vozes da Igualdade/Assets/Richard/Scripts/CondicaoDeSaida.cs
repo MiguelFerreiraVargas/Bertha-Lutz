@@ -2,8 +2,7 @@ using UnityEngine;
 
 public class CondicaoDeSaida : MonoBehaviour
 {
-    public Inventoryy inventory;  // inventário do Player
-    [SerializeField] private ShutTheLights shutTheLights; // referenciado no inspetor
+    public Inventoryy inventory;  // inventário do Playe
     public int itemIdParaVencer;  // ID do item que abre a porta
 
     [SerializeField] private GameObject porta;  // porta a ser desativ;
@@ -29,20 +28,6 @@ public class CondicaoDeSaida : MonoBehaviour
                 // Abre a porta
                 porta.SetActive(false);
                 Debug.Log("Porta aberta!");
-
-                // Ativa a mudança de sprite
-                if (shutTheLights != null)
-                {
-                    shutTheLights.SpriteChange(); // <- método novo (ver abaixo)
-                }
-                else
-                {
-                    Debug.LogWarning("ShutTheLights não foi atribuído!");
-                }
-            }
-            else
-            {
-                Debug.Log("Você precisa do item para abrir a porta.");
             }
         }
     }

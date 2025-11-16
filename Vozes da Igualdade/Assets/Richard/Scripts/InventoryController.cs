@@ -18,7 +18,7 @@ public class InventoryController : MonoBehaviour
     {
         if (!slotsCreated)
         {
-            for (int i = 0; i < 6 ; i++)
+            for (int i = 0; i < 4 ; i++)
             {
                 GameObject slot = Instantiate(slotPrefab, slotsParent);
                 slots.Add(slot);
