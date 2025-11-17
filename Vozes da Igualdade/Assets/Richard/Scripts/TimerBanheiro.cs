@@ -1,30 +1,60 @@
-using UnityEngine;
-using TMPro;
+﻿using UnityEngine;
 
-public class TimerPuzzle : MonoBehaviour
+public class MirrorPuzzle : MonoBehaviour
 {
-    public float tempo = 90f; // 1 minuto e 30s
-    public bool timerAtivo = true;
+    public GameObject puzzleTela;      // sprite do puzzle
+    public GameObject documento;       // documento para liberar
+    public GameObject hitboxInvertida; // collider sobre a parte invertida
 
-    public TMP_Text textoTimer;
+    public float timer = 90f;
+    bool puzzleAtivo = false;
+    bool timerRodando = true; // começa ao entrar na sala
 
-    public bool tempoAcabou = false;
+    void Start()
+    {
+        puzzleTela.SetActive(false);
+        documento.SetActive(false);
+    }
 
     void Update()
     {
-        if (!timerAtivo) return;
-
-        tempo -= Time.deltaTime;
-
-        if (tempo <= 0)
+        // TIMER
+        if (timerRodando && !puzzleAtivo)
         {
-            tempo = 0;
-            timerAtivo = false;
-            tempoAcabou = true;
+            timer -= Time.deltaTime;
+
+            if (timer <= 0f)
+            {
+                // Acabou o tempo → começa a perder sanidade
+                FindAnyObjectByType<BarraDeVida>().sanity -= 20 * Time.deltaTime;
+            }
         }
 
-        int minutos = Mathf.FloorToInt(tempo / 60);
-        int segundos = Mathf.FloorToInt(tempo % 60);
-        textoTimer.text = $"{minutos:00}:{segundos:00}";
+        // CLIQUE NO PUZZLE
+        if (puzzleAtivo && Input.GetMouseButtonDown(0))
+        {
+            Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Collider2D col = Physics2D.OverlapPoint(mousePos);
+
+            if (col != null && col.gameObject == hitboxInvertida)
+            {
+                ResolverPuzzle();
+            }
+        }
+    }
+
+    public void AbrirPuzzle()
+    {
+        puzzleTela.SetActive(true);
+        puzzleAtivo = true;
+        timerRodando = false;
+    }
+
+    void ResolverPuzzle()
+    {
+        puzzleTela.SetActive(false);
+        documento.SetActive(true);
+        puzzleAtivo = false;
+        timerRodando = false;
     }
 }
