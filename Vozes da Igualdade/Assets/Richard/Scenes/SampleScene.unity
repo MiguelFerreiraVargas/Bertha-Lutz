@@ -381,6 +381,7 @@ GameObject:
   - component: {fileID: 79135973}
   - component: {fileID: 79135972}
   - component: {fileID: 79135974}
+  - component: {fileID: 79135975}
   m_Layer: 0
   m_Name: Portas
   m_TagString: Untagged
@@ -465,6 +466,19 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 3.2674103, y: 2.3360863}
   m_EdgeRadius: 0
+--- !u!114 &79135975
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 79135971}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b073973fb8517d40b32a3dadaafd2b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TrocarCena
+  Banheiro: 
 --- !u!1 &80822359
 GameObject:
   m_ObjectHideFlags: 0
@@ -704,7 +718,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 282.01627, y: 1.5012054}
+  m_AnchoredPosition: {x: 282.01627, y: 1.5012207}
   m_SizeDelta: {x: -677.1, y: -3.0024}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &119714996 stripped
@@ -20024,6 +20038,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1697445684}
   - component: {fileID: 1697445683}
+  - component: {fileID: 1697445685}
   m_Layer: 0
   m_Name: Porta
   m_TagString: Untagged
@@ -20104,6 +20119,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 79135973}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1697445685
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1697445680}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ccfd36fbfd3afb45abda47502bc608b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CondicaoDeSaida
+  inventory: {fileID: 0}
+  itemIdParaVencer: 0
+  porta: {fileID: 0}
 --- !u!1 &1718979221
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-public class TimerScript : MonoBehaviour
+public class Timer : MonoBehaviour
 {
 
     public Animator playerAnimator;
