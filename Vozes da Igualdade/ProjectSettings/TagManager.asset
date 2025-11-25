@@ -76,14 +76,14 @@ TagManager:
   - name: LAYER13
     uniqueID: 2706469849
     locked: 0
+  - name: Player
+    uniqueID: 1017007857
+    locked: 0
   - name: canva
     uniqueID: 1148455977
     locked: 0
   - name: canvasPuzzle
     uniqueID: 1367444169
-    locked: 0
-  - name: Player
-    uniqueID: 1017007857
     locked: 0
   m_RenderingLayers:
   - Default
