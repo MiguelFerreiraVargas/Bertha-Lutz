@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement; 
 
 public class CondicaoDeSaida : MonoBehaviour
 {
@@ -6,6 +7,9 @@ public class CondicaoDeSaida : MonoBehaviour
     public int itemIdParaVencer;  // ID do item que abre a porta
 
     [SerializeField] private GameObject porta;  // porta a ser desativ;
+
+    public string loadScene = "Banheiro";
+
     private void Start()
     {
         if (porta != null)
@@ -28,6 +32,7 @@ public class CondicaoDeSaida : MonoBehaviour
                 // Abre a porta
                 porta.SetActive(false);
                 Debug.Log("Porta aberta!");
+                SceneManager.LoadScene(loadScene);
             }
         }
     }
