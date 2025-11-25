@@ -4598,7 +4598,8 @@ MonoBehaviour:
   puzzleImage: {fileID: 1813414673}
   puzzleManager: {fileID: 180326005}
   postPuzzleDialogue:
-  - "Parece que voc\xEA conseguiu... some com isso da minha frente!"
+  - "Parece que voc\xEA conseguiu... at\xE9 pode pegar essa coisa, mas haver\xE1
+    consequ\xEAncias... tome cuidado com as suas costas, eu diria."
   advanceKey: 101
 --- !u!61 &518076151
 BoxCollider2D:
@@ -5039,7 +5040,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 54ccf057e33e9144c981c3f3fc827927, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -5105,7 +5106,7 @@ MonoBehaviour:
   m_margin: {x: -18.19188, y: 0, z: -206.19673, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &823704323
@@ -19830,7 +19831,7 @@ MonoBehaviour:
   m_StartCorner: 0
   m_StartAxis: 0
   m_CellSize: {x: 50, y: 50}
-  m_Spacing: {x: 5, y: 5}
+  m_Spacing: {x: 3, y: 3}
   m_Constraint: 1
   m_ConstraintCount: 4
 --- !u!114 &1538967899
@@ -21800,6 +21801,26 @@ PrefabInstance:
     - target: {fileID: 2079779167971165394, guid: c910ea06ac4ac224796d586729966c59, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4355183941443735198, guid: c910ea06ac4ac224796d586729966c59, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 54ccf057e33e9144c981c3f3fc827927, type: 2}
+    - target: {fileID: 4355183941443735198, guid: c910ea06ac4ac224796d586729966c59, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -6016433854239848674, guid: 54ccf057e33e9144c981c3f3fc827927, type: 2}
+    - target: {fileID: 4355183941443735198, guid: c910ea06ac4ac224796d586729966c59, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341816309510506985, guid: c910ea06ac4ac224796d586729966c59, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -13.86
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341816309510506985, guid: c910ea06ac4ac224796d586729966c59, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 33.6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
