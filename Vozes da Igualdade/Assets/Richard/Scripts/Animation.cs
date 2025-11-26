@@ -1,39 +1,52 @@
 using UnityEngine;
 
-public class Animation : MonoBehaviour
+public class PlayerAnimationController : MonoBehaviour
 {
-    public Animator playerAnimator;
+    public Animator anim;
 
-    private bool wasWalking = false;
+    private string currentState = "";
 
     void Start()
     {
-        if (playerAnimator == null)
-            playerAnimator = GetComponentInChildren<Animator>();
+        if (anim == null)
+            anim = GetComponentInChildren<Animator>();
     }
 
     void Update()
     {
-        // detecta movimento
-        bool isWalking = Input.GetKey(KeyCode.W) ||
-                         Input.GetKey(KeyCode.A) ||
-                         Input.GetKey(KeyCode.S) ||
-                         Input.GetKey(KeyCode.D);
+        float x = Input.GetAxisRaw("Horizontal");
+        float y = Input.GetAxisRaw("Vertical");
 
-        // mostra no console pra testar
-       
-        // só troca quando o estado muda (evita reiniciar animação todo frame)
-        if (isWalking && !wasWalking)
+        // sem movimento â†’ Idle
+        if (x == 0 && y == 0)
         {
-         
-            playerAnimator.Play("Walkinfforreal", 0, 0f);
-        }
-        else if (!isWalking && wasWalking)
-        {
-            
-            playerAnimator.Play("Idle", 0, 0f);
+            ChangeState("REALIDLE]");
+            return;
         }
 
-        wasWalking = isWalking;
+        // ordem de prioridade:
+        // vertical primeiro (W / S)
+        if (Mathf.Abs(y) > Mathf.Abs(x))
+        {
+            if (y > 0)
+                ChangeState("wALkUp");
+            else
+                ChangeState("WalkRight");
+        }
+        else
+        {
+            if (x > 0)
+                ChangeState("WalkRightcerto");
+            else
+                ChangeState("WalkLeft");
+        }
+    }
+
+    void ChangeState(string newState)
+    {
+        if (currentState == newState) return;
+
+        currentState = newState;
+        anim.Play(newState, 0, 0f);
     }
 }
