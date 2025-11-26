@@ -187,7 +187,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1797948448}
-  - {fileID: 1758891623}
   m_Father: {fileID: 723700945}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -433,6 +432,10 @@ PrefabInstance:
     - target: {fileID: 558754803585838554, guid: c910ea06ac4ac224796d586729966c59, type: 3}
       propertyPath: m_Name
       value: BarraDeSanidade
+      objectReference: {fileID: 0}
+    - target: {fileID: 1672371828228552156, guid: c910ea06ac4ac224796d586729966c59, type: 3}
+      propertyPath: m_Name
+      value: TextoSanidade
       objectReference: {fileID: 0}
     - target: {fileID: 1802982910965610386, guid: c910ea06ac4ac224796d586729966c59, type: 3}
       propertyPath: m_Type
@@ -3476,6 +3479,7 @@ RectTransform:
   m_Children:
   - {fileID: 345483298}
   - {fileID: 196495096}
+  - {fileID: 1758891623}
   m_Father: {fileID: 1746250755}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -8340,11 +8344,11 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 476839444}
-  m_Father: {fileID: 196495096}
+  m_Father: {fileID: 723700945}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -32.9, y: 93.4}
+  m_AnchoredPosition: {x: -7.6029644, y: 43.999996}
   m_SizeDelta: {x: 185.65, y: 45.14}
   m_Pivot: {x: 0.15632045, y: 0.054049425}
 --- !u!114 &1758891624
