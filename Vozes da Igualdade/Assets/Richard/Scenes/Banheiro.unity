@@ -119,6 +119,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &102330376 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3451226931110474299, guid: dddf0c33484fa1543ac01aa3809a0a85, type: 3}
+  m_PrefabInstance: {fileID: 2056398669}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &182045236
 GameObject:
   m_ObjectHideFlags: 0
@@ -6402,7 +6407,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6867340251550360938, guid: dddf0c33484fa1543ac01aa3809a0a85, type: 3}
   m_PrefabInstance: {fileID: 2056398669}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 102330376}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 305d2225ef97d3f4fbdb69e1a41839c1, type: 3}
@@ -6814,7 +6819,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 9.6, y: 0}
+  m_AnchoredPosition: {x: 9.599998, y: 0}
   m_SizeDelta: {x: 244.13, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1215212278
@@ -8279,12 +8284,30 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8134662745126565516, guid: dddf0c33484fa1543ac01aa3809a0a85, type: 3}
   m_PrefabInstance: {fileID: 2056398669}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 102330376}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ba1f9424959170544841904b021442fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!95 &1755002882 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 6540759591700403425, guid: dddf0c33484fa1543ac01aa3809a0a85, type: 3}
+  m_PrefabInstance: {fileID: 2056398669}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1755002885
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 102330376}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 131be1d957291f944a2ff1d1747c3751, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Animation1
+  anim: {fileID: 1755002882}
 --- !u!1 &1758891622
 GameObject:
   m_ObjectHideFlags: 0
@@ -9328,6 +9351,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6540759591700403425, guid: dddf0c33484fa1543ac01aa3809a0a85, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: e12c14d64062a454c9f337b0a0979d7e, type: 2}
     - target: {fileID: 8134662745126565516, guid: dddf0c33484fa1543ac01aa3809a0a85, type: 3}
       propertyPath: slider
       value: 
@@ -9343,7 +9370,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3451226931110474299, guid: dddf0c33484fa1543ac01aa3809a0a85, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1755002885}
   m_SourcePrefab: {fileID: 100100000, guid: dddf0c33484fa1543ac01aa3809a0a85, type: 3}
 --- !u!224 &2127126936 stripped
 RectTransform:
