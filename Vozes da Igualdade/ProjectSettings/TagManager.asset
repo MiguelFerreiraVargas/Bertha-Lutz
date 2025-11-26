@@ -73,11 +73,11 @@ TagManager:
   - name: Eletrodomesticos
     uniqueID: 1460608477
     locked: 0
-  - name: LAYER13
-    uniqueID: 2706469849
-    locked: 0
   - name: Player
     uniqueID: 1017007857
+    locked: 0
+  - name: LAYER13
+    uniqueID: 2706469849
     locked: 0
   - name: canva
     uniqueID: 1148455977
