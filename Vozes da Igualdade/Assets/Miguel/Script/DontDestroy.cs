@@ -53,15 +53,5 @@ public class PlayerPersist : MonoBehaviour
             if (spawnTag != null)
                 transform.position = spawnTag.transform.position;
         }
-
-        // se a cena tiver uma câmera que precisa referenciar o player,
-        // tentamos atualizar a câmera principal (caso use script de follow)
-        Camera mainCam = Camera.main;
-        if (mainCam != null)
-        {
-            CameraFollow follow = mainCam.GetComponent<CameraFollow>();
-            if (follow != null)
-                follow.SetTarget(transform);
-        }
     }
 }

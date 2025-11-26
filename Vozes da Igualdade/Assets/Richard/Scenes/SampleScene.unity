@@ -18010,6 +18010,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63ef922d035d75040b787d57397cfad1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerPersist
+  spawnNameInScene: PlayerSpawn
 --- !u!1 &1181709196
 GameObject:
   m_ObjectHideFlags: 0
@@ -21616,7 +21617,8 @@ PrefabInstance:
       propertyPath: contadorSanidade
       value: 
       objectReference: {fileID: 51380395}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8957443117958690335, guid: dddf0c33484fa1543ac01aa3809a0a85, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
