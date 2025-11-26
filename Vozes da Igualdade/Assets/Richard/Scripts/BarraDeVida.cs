@@ -1,4 +1,4 @@
-using UnityEngine;
+Ôªøusing UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
@@ -18,11 +18,11 @@ public class BarraDeVida : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject);  // N√O DESTRUIR AO TROCAR DE CENA
+            DontDestroyOnLoad(gameObject);  // N√ÉO DESTRUIR AO TROCAR DE CENA
         }
         else
         {
-            Destroy(gameObject);            // EVITA DUPLICA«√O
+            Destroy(gameObject);            // EVITA DUPLICA√á√ÉO
             return;
         }
     }

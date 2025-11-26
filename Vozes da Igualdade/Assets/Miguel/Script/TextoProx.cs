@@ -1,14 +1,20 @@
 using UnityEngine;
 
-public class VisaoCone : MonoBehaviour
+public class TextoProx : MonoBehaviour
 {
-    public InimigoLabirinto inimigo;
+    public GameObject textoUI;
+
+    private void Start()
+    {
+        if (textoUI != null)
+            textoUI.SetActive(false);
+    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
         {
-            inimigo.playerDetectado = true;
+            textoUI.SetActive(true);
         }
     }
 
@@ -16,7 +22,7 @@ public class VisaoCone : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            inimigo.playerDetectado = false;
+            textoUI.SetActive(false);
         }
     }
 }

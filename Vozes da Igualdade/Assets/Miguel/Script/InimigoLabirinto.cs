@@ -1,56 +1,83 @@
-using UnityEngine;
+﻿using UnityEngine;
 
-public class InimigoLabirinto : MonoBehaviour
+public class InimigoPacman : MonoBehaviour
 {
-    public float speed = 2f;
-    public float chaseSpeed = 4f;
+    [Header("Configurações de Movimento")]
+    public float velocidadeNormal = 2f;
+    public float velocidadePerseguindo = 3.5f;
 
-    public Transform pontoA;
-    public Transform pontoB;
+    [Header("Detecção do Player")]
+    public float distanciaDeVisao = 6f;
 
-    private Transform destino;
+    [Header("Dano")]
+    public int dano = 5;          // SEMPRE 5
+    public float intervaloDano = 1f; // a cada 1 segundo
+
     private Transform player;
-
-    public bool playerDetectado = false;
-
-    public BarraDeVida barraDeVida;
+    private Vector2 direcaoAleatoria;
+    private float tempoTrocarDirecao = 2f;
+    private float contadorDirecao = 0f;
+    private float contadorDano = 0f;
 
     void Start()
     {
-        destino = pontoA;
-        player = GameObject.FindGameObjectWithTag("Player").transform;
+        GameObject p = GameObject.FindGameObjectWithTag("Player");
+        if (p != null) player = p.transform;
+
+        TrocarDirecaoAleatoria();
     }
 
     void Update()
     {
-        if (playerDetectado)
-        {
-            transform.position = Vector2.MoveTowards(
-                transform.position,
-                player.position,
-                chaseSpeed * Time.deltaTime
-            );
-        }
-        else
-        {
-            transform.position = Vector2.MoveTowards(
-                transform.position,
-                destino.position,
-                speed * Time.deltaTime
-            );
+        if (player == null) return;
 
-            if (Vector2.Distance(transform.position, destino.position) < 0.1f)
+        float distancia = Vector2.Distance(transform.position, player.position);
+
+        if (distancia <= distanciaDeVisao)
+            PerseguirPlayer();
+        else
+            AndarAleatorio();
+    }
+
+    void PerseguirPlayer()
+    {
+        Vector2 direcao = (player.position - transform.position).normalized;
+        transform.position += (Vector3)(direcao * velocidadePerseguindo * Time.deltaTime);
+    }
+
+    void AndarAleatorio()
+    {
+        contadorDirecao += Time.deltaTime;
+
+        if (contadorDirecao >= tempoTrocarDirecao)
+            TrocarDirecaoAleatoria();
+
+        transform.position += (Vector3)(direcaoAleatoria * velocidadeNormal * Time.deltaTime);
+    }
+
+    void TrocarDirecaoAleatoria()
+    {
+        direcaoAleatoria = Random.insideUnitCircle.normalized;
+        contadorDirecao = 0f;
+    }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.collider.CompareTag("Player"))
+        {
+            contadorDano += Time.deltaTime;
+
+            if (contadorDano >= intervaloDano)
             {
-                destino = destino == pontoA ? pontoB : pontoA;
+                BarraDeVida.instance.PerderSanidade(dano);
+                contadorDano = 0f;
             }
         }
     }
 
-    private void OnCollisionStay2D(Collision2D other)
+    private void OnCollisionExit2D(Collision2D collision)
     {
-        if (other.collider.CompareTag("Player"))
-        {
-            barraDeVida.PerderSanidade(40f * Time.deltaTime);
-        }
+        if (collision.collider.CompareTag("Player"))
+            contadorDano = 0f;
     }
 }
