@@ -8563,6 +8563,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InteragirQuest
   tecla: 101
+--- !u!114 &1755002897
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 102330376}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bab177e23ea0f874fbb68b455f874603, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DestroyPlayer
 --- !u!1 &1758891622
 GameObject:
   m_ObjectHideFlags: 0
@@ -9688,6 +9700,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3451226931110474299, guid: dddf0c33484fa1543ac01aa3809a0a85, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1755002896}
+    - targetCorrespondingSourceObject: {fileID: 3451226931110474299, guid: dddf0c33484fa1543ac01aa3809a0a85, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1755002897}
   m_SourcePrefab: {fileID: 100100000, guid: dddf0c33484fa1543ac01aa3809a0a85, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
