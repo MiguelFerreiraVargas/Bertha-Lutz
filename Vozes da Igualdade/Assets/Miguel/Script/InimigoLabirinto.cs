@@ -1,35 +1,48 @@
 ﻿using UnityEngine;
 
-public class InimigoCimaBaixo : MonoBehaviour
+public class InimigoPatrulha : MonoBehaviour
 {
-    [Header("Movimento")]
+    public Transform pontoA;   // Coloque no Inspector
+    public Transform pontoB;   // Coloque no Inspector
     public float velocidade = 2f;
-    public Vector2 direcao = Vector2.up; // Começa indo pra cima - pode trocar no inspetor
+    public int dano = 5;
 
-    [Header("Dano")]
-    public int dano = 10;
+    private Transform alvo;    // Para onde ele está indo
+    private Rigidbody2D rb;
 
-    void Update()
+    void Start()
     {
-        // Movimento simples para cima/baixo
-        transform.Translate(direcao * velocidade * Time.deltaTime);
+        rb = GetComponent<Rigidbody2D>();
+        rb.gravityScale = 0;
+        rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+
+        alvo = pontoB; // começa indo para o ponto B
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    void FixedUpdate()
     {
-        // Se bater no limite de movimento, inverte direção
-        if (collision.CompareTag("Limite"))
-        {
-            direcao *= -1; // cima ↔ baixo
-        }
+        // Move até o ponto
+        Vector2 novaPos = Vector2.MoveTowards(
+            rb.position,
+            alvo.position,
+            velocidade * Time.fixedDeltaTime
+        );
 
-        // Se encostar no player
-        if (collision.CompareTag("Player"))
+        rb.MovePosition(novaPos);
+
+        // Quando chega perto do alvo → troca
+        if (Vector2.Distance(transform.position, alvo.position) < 0.1f)
+        {
+            alvo = (alvo == pontoA ? pontoB : pontoA);
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.collider.CompareTag("Player"))
         {
             BarraDeVida.instance.PerderSanidade(dano);
-
-            // Some da cena
-            Destroy(gameObject);
+            Destroy(gameObject); // inimigo desaparece
         }
     }
 }
