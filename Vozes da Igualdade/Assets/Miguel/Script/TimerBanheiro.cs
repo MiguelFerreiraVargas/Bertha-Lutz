@@ -14,7 +14,7 @@ public class TimerBanheiro : MonoBehaviour
 
     private float contadorDano = 0f;
 
-    private bool acabou = false; // controla quando chegou a zero
+    private bool acabou = false;
     private float blinkTimer = 0f;
 
     void Start()
@@ -26,9 +26,18 @@ public class TimerBanheiro : MonoBehaviour
 
     void Update()
     {
+        // GARANTE QUE SEMPRE ACHE A BARRA DE VIDA
+        if (barraDeVida == null)
+        {
+            barraDeVida = BarraDeVida.instance;
+            // se ainda não existe, espera o próximo frame
+            if (barraDeVida == null)
+                return;
+        }
+
         if (!ativo) return;
 
-        // Se o tempo já acabou → só pisca e aplica dano
+        // TIMER TERMINADO
         if (acabou)
         {
             PiscarTexto();
@@ -36,7 +45,7 @@ public class TimerBanheiro : MonoBehaviour
             return;
         }
 
-        // Contagem regressiva normal
+        // TIMER RODANDO
         if (tempoAtual > 0)
         {
             tempoAtual -= Time.deltaTime;
@@ -47,14 +56,12 @@ public class TimerBanheiro : MonoBehaviour
             timerText.text = $"{minutos:00}:{segundos:00}";
         }
 
-        // Se chegou a zero → trava timer e começa o estado "acabou"
         if (tempoAtual <= 0 && !acabou)
         {
             tempoAtual = 0;
             timerText.text = "00:00";
             acabou = true;
 
-            // Começa a piscar vermelho
             timerText.color = Color.red;
         }
     }
@@ -74,7 +81,6 @@ public class TimerBanheiro : MonoBehaviour
     {
         blinkTimer += Time.deltaTime;
 
-        // alterna entre visível e invisível a cada 0.5s
         if (blinkTimer >= 0.5f)
         {
             timerText.enabled = !timerText.enabled;
@@ -84,9 +90,10 @@ public class TimerBanheiro : MonoBehaviour
 
     public void IniciarTimer()
     {
-        tempoAtual = tempoMaximo;
         ativo = true;
         acabou = false;
+        tempoAtual = tempoMaximo;
+
         timerText.color = Color.white;
         timerText.enabled = true;
         timerText.gameObject.SetActive(true);

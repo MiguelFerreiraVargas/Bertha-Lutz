@@ -1,83 +1,35 @@
 ﻿using UnityEngine;
 
-public class InimigoPacman : MonoBehaviour
+public class InimigoCimaBaixo : MonoBehaviour
 {
-    [Header("Configurações de Movimento")]
-    public float velocidadeNormal = 2f;
-    public float velocidadePerseguindo = 3.5f;
-
-    [Header("Detecção do Player")]
-    public float distanciaDeVisao = 6f;
+    [Header("Movimento")]
+    public float velocidade = 2f;
+    public Vector2 direcao = Vector2.up; // Começa indo pra cima - pode trocar no inspetor
 
     [Header("Dano")]
-    public int dano = 5;          // SEMPRE 5
-    public float intervaloDano = 1f; // a cada 1 segundo
-
-    private Transform player;
-    private Vector2 direcaoAleatoria;
-    private float tempoTrocarDirecao = 2f;
-    private float contadorDirecao = 0f;
-    private float contadorDano = 0f;
-
-    void Start()
-    {
-        GameObject p = GameObject.FindGameObjectWithTag("Player");
-        if (p != null) player = p.transform;
-
-        TrocarDirecaoAleatoria();
-    }
+    public int dano = 10;
 
     void Update()
     {
-        if (player == null) return;
-
-        float distancia = Vector2.Distance(transform.position, player.position);
-
-        if (distancia <= distanciaDeVisao)
-            PerseguirPlayer();
-        else
-            AndarAleatorio();
+        // Movimento simples para cima/baixo
+        transform.Translate(direcao * velocidade * Time.deltaTime);
     }
 
-    void PerseguirPlayer()
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        Vector2 direcao = (player.position - transform.position).normalized;
-        transform.position += (Vector3)(direcao * velocidadePerseguindo * Time.deltaTime);
-    }
-
-    void AndarAleatorio()
-    {
-        contadorDirecao += Time.deltaTime;
-
-        if (contadorDirecao >= tempoTrocarDirecao)
-            TrocarDirecaoAleatoria();
-
-        transform.position += (Vector3)(direcaoAleatoria * velocidadeNormal * Time.deltaTime);
-    }
-
-    void TrocarDirecaoAleatoria()
-    {
-        direcaoAleatoria = Random.insideUnitCircle.normalized;
-        contadorDirecao = 0f;
-    }
-
-    private void OnCollisionStay2D(Collision2D collision)
-    {
-        if (collision.collider.CompareTag("Player"))
+        // Se bater no limite de movimento, inverte direção
+        if (collision.CompareTag("Limite"))
         {
-            contadorDano += Time.deltaTime;
-
-            if (contadorDano >= intervaloDano)
-            {
-                BarraDeVida.instance.PerderSanidade(dano);
-                contadorDano = 0f;
-            }
+            direcao *= -1; // cima ↔ baixo
         }
-    }
 
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        if (collision.collider.CompareTag("Player"))
-            contadorDano = 0f;
+        // Se encostar no player
+        if (collision.CompareTag("Player"))
+        {
+            BarraDeVida.instance.PerderSanidade(dano);
+
+            // Some da cena
+            Destroy(gameObject);
+        }
     }
 }

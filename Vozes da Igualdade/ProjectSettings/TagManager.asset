@@ -9,6 +9,8 @@ TagManager:
   - Porta
   - Esconderijo
   - FalasAuto
+  - Limites
+  - Limite
   layers:
   - Default
   - TransparentFX

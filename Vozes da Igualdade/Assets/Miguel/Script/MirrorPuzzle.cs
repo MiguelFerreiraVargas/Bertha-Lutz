@@ -1,20 +1,18 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class MirrorPuzzle : MonoBehaviour
 {
-    [Header("Painéis")]
+    [Header("PainÃ©is")]
     public GameObject painelPuzzle;
 
     [Header("Portas (configure no Inspector)")]
-    // Porta que representa a porta fechada (visível antes do puzzle ser completado)
     public GameObject portaFechada;
-    // Porta que deve aparecer / ficar visível depois de completar o puzzle
     public GameObject portaAberta;
-    // Referência opcional ao script da porta (mantida caso precise no futuro)
     public DoorConfig doorConfig;
 
-    [Header("Botões do Puzzle")]
+    [Header("BotÃµes do Puzzle")]
     public Button botaoA;
     public Button botaoB;
     public Button botaoC;
@@ -29,39 +27,44 @@ public class MirrorPuzzle : MonoBehaviour
     [Header("Timer")]
     public TimerBanheiro timer;
 
+    [Header("Contador de Letras")]
+    public TMP_Text contadorTexto;   // <- ARRASTE O TEXTO AQUI
+    private int contador = 0;
+
     void Start()
     {
-        // proteção contra referências nulas
         if (painelPuzzle != null) painelPuzzle.SetActive(false);
 
-        // Garantir estado inicial das portas (ajuste conforme sua cena)
         if (portaFechada != null) portaFechada.SetActive(true);
         if (portaAberta != null) portaAberta.SetActive(false);
 
-        // se a doorConfig não foi atribuída manualmente, tenta pegar do portaAberta (não será usada automaticamente aqui)
         if (doorConfig == null && portaAberta != null)
             doorConfig = portaAberta.GetComponent<DoorConfig>();
 
-        // Só adiciona listeners se os botões existirem
         if (botaoA != null) botaoA.onClick.AddListener(() => Clicar("A"));
         if (botaoB != null) botaoB.onClick.AddListener(() => Clicar("B"));
         if (botaoC != null) botaoC.onClick.AddListener(() => Clicar("C"));
+
+        AtualizarContador();
     }
 
     void OnDestroy()
     {
-        // remover listeners para evitar leaks/exceptions em edição
         if (botaoA != null) botaoA.onClick.RemoveAllListeners();
         if (botaoB != null) botaoB.onClick.RemoveAllListeners();
         if (botaoC != null) botaoC.onClick.RemoveAllListeners();
     }
 
-    // Não permite abrir o puzzle se já foi completado
     public void AtivarPuzzle()
     {
         if (completado) return;
+
         if (painelPuzzle != null) painelPuzzle.SetActive(true);
         ativo = true;
+
+        contador = 0;
+        entradaPlayer = "";
+        AtualizarContador();
 
         if (timer != null) timer.IniciarTimer();
     }
@@ -79,13 +82,30 @@ public class MirrorPuzzle : MonoBehaviour
         if (!ativo) return;
 
         entradaPlayer += letra;
+        contador++;
+        AtualizarContador();
 
         if (entradaPlayer.Length == ordemCorreta.Length)
         {
             if (entradaPlayer == ordemCorreta)
+            {
                 PuzzleCompleto();
+            }
             else
+            {
+                // ERROU â†’ ZERA
                 entradaPlayer = "";
+                contador = 0;
+                AtualizarContador();
+            }
+        }
+    }
+
+    void AtualizarContador()
+    {
+        if (contadorTexto != null)
+        {
+            contadorTexto.text = $"Letras: {contador}/3";
         }
     }
 
@@ -93,21 +113,17 @@ public class MirrorPuzzle : MonoBehaviour
     {
         completado = true;
 
-        // Mostrar a porta "aberta" e esconder a fechada
         if (portaFechada != null) portaFechada.SetActive(false);
         if (portaAberta != null) portaAberta.SetActive(true);
 
-        // NÃO chamamos doorConfig.Unlock() aqui mais — remoção solicitada.
-        // Se não existir DoorConfig, garantimos que o collider da porta aberta esteja habilitado
-        if (portaAberta != null)
-        {
-            Collider2D c2 = portaAberta.GetComponent<Collider2D>();
-            if (c2 != null) c2.enabled = true;
-            Collider c3 = portaAberta.GetComponent<Collider>();
-            if (c3 != null) c3.enabled = true;
-        }
+        Collider2D c2 = portaAberta.GetComponent<Collider2D>();
+        if (c2 != null) c2.enabled = true;
+
+        Collider c3 = portaAberta.GetComponent<Collider>();
+        if (c3 != null) c3.enabled = true;
 
         if (timer != null) timer.PararTimer();
+
         FecharPuzzle();
     }
 }
